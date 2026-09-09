@@ -1,8 +1,6 @@
-# wallpaintr
+# wallhalle
 
-A static gallery of museum scans of paintings, offered as wallpapers for 5k and 6k screens. Downloads are free. Visitors can donate in Bitcoin and Monero; a Lightning slot exists and stays hidden until an address is configured.
-
-The name is preliminary. It appears in `config/_default/hugo.toml` (`title`) and nowhere else in this repo.
+A static gallery of museum scans of paintings, offered as wallpapers for 5K and 6K screens at https://wallhalle.circum.space. Downloads are free. Visitors can donate in Bitcoin, Lightning and Monero.
 
 ## Running locally
 
@@ -19,7 +17,7 @@ Everything runs in a container built from `Containerfile.dev` (Alpine with hugo,
 
 ## Adding a painting
 
-1. Put the source file in `originals/` under a slug name, e.g. `originals/artist-title.jpg`. The directory is tracked by Git LFS; bytes are never modified.
+1. Put the source file in `originals/` under a slug name, e.g. `originals/artist-title.jpg`, or let `scripts/fetch.sh` download it from the `source` URL. The directory is not in git: originals live on your machine and on the cluster volume. Bytes are never modified.
 2. Create `content/paintings/artist-title.md`:
 
    ```yaml
@@ -71,7 +69,7 @@ Only 16:9 exists at 5K and above among conventional monitors. 3:2 and 4:3 panels
 
 A crop box that misses its target by at most 1% (`UPSCALE_TOLERANCE` in `scripts/derive.sh`) is upscaled to the target, counts as full, and its page shows the factor. Beyond that nothing is upscaled: when the crop box is smaller than the target, the file is emitted at the box's native size, flagged `full: false` in the JSON, and named by its real dimensions; two targets that collapse to the same box produce one file. The gallery filter (All / 6K / 5K / 4K) counts only full-size cuts, so a painting is listed under 5K only if at least one 5K target came out at exactly that size.
 
-All of these paths are generated and gitignored.
+Thumbnails, previews, QR codes and the size data are committed: Hugo needs them and CI has no originals to derive them from. Cuts and originals are gitignored and never enter the repo or the site image.
 
 ## Licenses
 
@@ -88,8 +86,19 @@ Addresses live in `config/_default/hugo.toml` under `[params.donate]`. They are 
 - Two Commons titles use a typographic apostrophe (U+2019), not ASCII. `source` must match the Commons title byte for byte or `scripts/fetch.sh` finds nothing.
 - `scripts/fetch.sh` stalls when run through the podman VM (Wikimedia throttles that path); run the download loop on the host, then derive in the container.
 - `content/impressum.md` is a placeholder.
-- Size: 63 paintings are 1.1 GB of originals and 2.4 GB of cuts. That is far beyond what a container image should carry, so the deployment round needs a volume or object store for `dl/`, not the baked-image pattern the blog uses. The Pompeii original alone is 217 MB and the Cleveland TIFF 110 MB.
+- Size: 61 paintings are 1.1 GB of originals and 2.4 GB of cuts on the volume; the volume request is 10 Gi. The Pompeii original alone is 217 MB and the Cleveland TIFF 110 MB, both offered as-is under "Original scan".
 
-## Not in this repo yet
+## Deployment
 
-Dockerfile and nginx config, CI publishing to GHCR, and the cluster manifests. The deployment pattern is the one used by the blog and website repos: static tree baked into `nginxinc/nginx-unprivileged`, tagged `<epoch>-<sha>`, picked up by Flux image automation.
+CI (`.github/workflows/image.yml`) builds two images per commit on `main`, tagged `<epoch>-<sha>`, and pushes them to GHCR:
+
+| Image | Built from | Runs as |
+|---|---|---|
+| `ghcr.io/circumspace/wallhalle` | `Dockerfile`: Hugo build stage, then `nginxinc/nginx-unprivileged` with `public/` and `nginx/default.conf` | the site Deployment |
+| `ghcr.io/circumspace/wallhalle-tools` | `Dockerfile.tools`: Alpine with vips, yq, curl plus `content/`, `config/`, `scripts/` | a Job that fills the volume |
+
+The cluster side lives in the infrastructure repo under `kubernetes/apps/wallhalle`. Flux image automation bumps both tags. The Job runs `scripts/cluster-sync.sh`: it points `originals/` and `static/dl` at the mounted volume, runs `fetch.sh` (skips files already present) and `derive.sh` with `DERIVE_CUTS_ONLY` set. Every content commit produces a new tools tag, Flux recreates the Job, and only new paintings cost download and vips time. The site pod mounts the same volume at `/srv/wallhalle` and nginx aliases `/dl/` onto it.
+
+Adding a painting end to end: write the content page, run `./dev.sh` locally to fetch, derive and check the focal point, commit the page plus its thumbnail, preview and size JSON, push. CI ships the site with the new page; the cluster Job fetches the original and cuts it.
+
+The volume is the only copy of originals and cuts on the cluster. Losing it costs a re-run of the Job, roughly 15 minutes for 60 paintings, not data: everything is refetchable from the source URLs while those stay up.

@@ -1,0 +1,42 @@
+# Builds two images and publishes them to GHCR: the site (nginx with the
+# Hugo output) and the tools image (fetch and derive for the cluster job).
+#
+# The tag is <unix-epoch>-<short-sha>, shared by both images from one
+# commit, sortable by the leading number. The Flux ImagePolicies in the
+# infrastructure repo select on that number and image automation commits
+# the bumps there; nothing in this repo talks to the cluster.
+#
+# On pull requests both images build without a push, so a broken template
+# or Dockerfile is caught at the PR gate.
+name: image
+on:
+  push:
+    branches: [main]
+  pull_request: {}
+  workflow_dispatch: {}
+permissions:
+  contents: read
+  packages: write
+jobs:
+  image:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - name: build images
+        run: |
+          TAG="$(date +%s)-$(git rev-parse --short HEAD)"
+          echo "TAG=$TAG" >> "$GITHUB_ENV"
+          for variant in "" "-tools"; do
+            docker build -t "ghcr.io/${{ github.repository }}$variant:$TAG" \
+              -f "Dockerfile${variant/-/.}" \
+              --label "org.opencontainers.image.source=https://github.com/${{ github.repository }}" \
+              --label "org.opencontainers.image.revision=${{ github.sha }}" \
+              .
+          done
+      - name: push images
+        if: github.event_name != 'pull_request'
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+          docker push "ghcr.io/${{ github.repository }}:$TAG"
+          docker push "ghcr.io/${{ github.repository }}-tools:$TAG"

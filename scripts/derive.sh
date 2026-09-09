@@ -1,7 +1,9 @@
 #!/bin/sh
 # Builds everything Hugo cannot: thumbnails, previews, fitted wallpaper cuts,
 # per-painting size data and donation QR codes. Runs before hugo in dev.sh
-# and build.sh. Requires vips, yq (Go version) and qrencode; see README.
+# and build.sh, and inside the cluster job with DERIVE_CUTS_ONLY set, which
+# skips thumbnails, previews and QR codes because those are committed.
+# Requires vips, yq (Go version) and qrencode; see README.
 set -eu
 
 cd "$(dirname "$0")/.."
@@ -48,11 +50,15 @@ for md in content/paintings/*.md; do
   web="static/w/$slug"; dl="static/dl/$slug"
   mkdir -p "$web" "$dl"
 
-  stale "$web/thumb.webp" "$orig" && vips thumbnail "$orig" "$web/thumb.webp[Q=82,strip]" 480
-  stale "$web/preview.webp" "$orig" && vips thumbnail "$orig" "$web/preview.webp[Q=84,strip]" 1600
-  stale "$web/preview.jpg" "$orig" && vips thumbnail "$orig" "$web/preview.jpg[Q=86,strip]" 1600
+  if [ -z "${DERIVE_CUTS_ONLY:-}" ]; then
+    stale "$web/thumb.webp" "$orig" && vips thumbnail "$orig" "$web/thumb.webp[Q=82,strip]" 480
+    stale "$web/preview.webp" "$orig" && vips thumbnail "$orig" "$web/preview.webp[Q=84,strip]" 1600
+    stale "$web/preview.jpg" "$orig" && vips thumbnail "$orig" "$web/preview.jpg[Q=86,strip]" 1600
+  fi
   ext=${orig##*.}
-  stale "$dl/original.$ext" "$orig" && cp "$orig" "$dl/original.$ext"
+  if stale "$dl/original.$ext" "$orig"; then
+    ln -f "$orig" "$dl/original.$ext" 2>/dev/null || cp "$orig" "$dl/original.$ext"
+  fi
 
   fx=$(fm '.focal[0] // 0.5' "$md"); fy=$(fm '.focal[1] // 0.5' "$md")
   variants=""
@@ -113,6 +119,8 @@ for j in data/derived/*.json; do
   [ -e "$j" ] || continue
   [ -e "content/paintings/$(basename "$j" .json).md" ] || rm -f "$j"
 done
+
+[ -z "${DERIVE_CUTS_ONLY:-}" ] || { [ "$fail" -eq 0 ] || { echo "derive: failed" >&2; exit 1; }; exit 0; }
 
 cfg=config/_default/hugo.toml
 mkdir -p static/qr
