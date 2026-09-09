@@ -8,10 +8,10 @@ enableRobotsTXT = true
   tagline = "Paintings of the sublime, sized for large screens"
 
 [params.donate]
-  bitcoin = "bc1qexampleplaceholderaddressreplaceme000000000"
+  bitcoin = "bc1qjt5n267ka8zuagtmrurez9vjs43hlg3qkqc8sc"
   bitcoin_sp = ""
-  monero = "4AexamplePlaceholderMoneroAddressReplaceMe0000000000000000000000000000000000000000000000000000"
-  lightning = ""
+  monero = "8AuPVyudY9hRedjkRzCisrDq5rnzbUvCTckcQr5dUaGWa1yzo77uMUP8LPpSQvPBbGEktHpPqkHFPdXuCYBEL6iz9kXAhFW"
+  lightning = "hermeticvm@minibits.cash"
 
 [markup.goldmark.renderer]
   unsafe = false
