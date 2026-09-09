@@ -85,7 +85,7 @@ Addresses live in `config/_default/hugo.toml` under `[params.donate]`. They are 
 - Institution, year and medium for the pulled paintings were filled from memory and file names. Pages with an empty `year` or `institution` need a lookup; every entry deserves a check against the museum page before the site goes public.
 - Two Commons titles use a typographic apostrophe (U+2019), not ASCII. `source` must match the Commons title byte for byte or `scripts/fetch.sh` finds nothing.
 - `scripts/fetch.sh` stalls when run through the podman VM (Wikimedia throttles that path); run the download loop on the host, then derive in the container.
-- No impressum page yet; add `content/impressum.md` and a nav link in `layouts/_default/baseof.html` before the WIP gate comes off.
+- No impressum page yet; add `content/impressum.md` and a nav link in `layouts/_default/baseof.html`. The site is public without one.
 - Size: 61 paintings are 1.1 GB of originals and 2.4 GB of cuts on the volume; the volume request is 10 Gi. The Pompeii original alone is 217 MB and the Cleveland TIFF 110 MB, both offered as-is under "Original scan".
 
 ## Deployment

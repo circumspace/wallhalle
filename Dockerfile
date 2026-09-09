@@ -11,5 +11,4 @@ RUN hugo --minify
 
 FROM nginxinc/nginx-unprivileged:1.29-alpine
 COPY nginx/default.conf /etc/nginx/conf.d/default.conf
-COPY nginx/htpasswd /etc/nginx/htpasswd
 COPY --from=build /src/public/ /usr/share/nginx/html/
