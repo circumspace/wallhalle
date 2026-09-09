@@ -1,0 +1,78 @@
+:root {
+  color-scheme: dark;
+  --bg: #0d0d10;
+  --panel: #16161b;
+  --fg: #e8e4dc;
+  --muted: #9a958b;
+  --accent: #c9a54a;
+  --line: #2a2a31;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.5;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); }
+a { color: var(--accent); }
+img { max-width: 100%; height: auto; display: block; }
+code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+
+.site-header, main, .site-footer {
+  max-width: 1400px; margin: 0 auto; padding: 0 1.25rem;
+}
+.site-header {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding-top: 1.25rem; padding-bottom: 1.25rem;
+}
+.brand { font-weight: 700; letter-spacing: 0.04em; text-decoration: none; color: var(--fg); }
+nav a { margin-left: 1.25rem; color: var(--muted); text-decoration: none; }
+nav a:hover { color: var(--fg); }
+.site-footer { padding: 3rem 1.25rem; color: var(--muted); font-size: 0.9rem; border-top: 1px solid var(--line); margin-top: 4rem; }
+
+.intro { max-width: 720px; margin: 2rem 0 3rem; }
+.intro h1 { font-size: 2rem; margin: 0 0 0.5rem; font-weight: 600; }
+.intro p { color: var(--muted); margin: 0; }
+
+.gallery {
+  list-style: none; padding: 0; margin: 0;
+  display: grid; gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+.gallery a { display: block; color: var(--fg); text-decoration: none; }
+.gallery img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; background: var(--panel); border-radius: 4px; }
+.gallery .caption { display: block; margin-top: 0.6rem; font-size: 0.95rem; color: var(--muted); }
+.gallery .caption strong { color: var(--fg); font-weight: 600; }
+
+.painting .preview img { width: 100%; background: var(--panel); border-radius: 4px; }
+.painting h1 { font-size: 1.75rem; margin: 1.5rem 0 0.25rem; font-weight: 600; }
+.byline { color: var(--muted); margin: 0 0 2rem; }
+.painting h2, .donate h2 { font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin: 2.5rem 0 1rem; }
+
+.downloads { border-collapse: collapse; width: 100%; max-width: 720px; }
+.downloads th, .downloads td { text-align: left; padding: 0.6rem 0.75rem; border-bottom: 1px solid var(--line); }
+.downloads th { color: var(--muted); font-weight: 500; font-size: 0.85rem; }
+.note, .attribution { color: var(--muted); font-size: 0.9rem; max-width: 720px; }
+
+.donate-rows { list-style: none; padding: 0; margin: 0; display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); }
+.donate-rows li { display: flex; gap: 1rem; background: var(--panel); padding: 1rem; border-radius: 6px; align-items: flex-start; }
+.donate-rows h3 { margin: 0 0 0.4rem; font-size: 1rem; }
+.donate-rows .qr { width: 160px; height: 160px; background: #fff; padding: 6px; border-radius: 4px; flex: none; }
+.addr { display: block; word-break: break-all; font-size: 0.8rem; color: var(--fg); }
+.actions { margin: 0.6rem 0 0; display: flex; gap: 1rem; align-items: center; font-size: 0.9rem; }
+.actions button { background: transparent; border: 1px solid var(--line); color: var(--fg); padding: 0.3rem 0.7rem; border-radius: 4px; cursor: pointer; font: inherit; }
+.actions button:hover { border-color: var(--accent); }
+
+.page { max-width: 720px; }
+.page h1 { font-size: 1.75rem; font-weight: 600; }
+
+.filter { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; margin: 0 0 2rem; padding: 1rem 1.25rem; background: var(--panel); border-radius: 6px; }
+.filter-label { color: var(--muted); margin-right: 0.5rem; }
+.filter button { background: transparent; border: 1px solid var(--line); color: var(--fg); padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font: inherit; font-weight: 600; display: flex; flex-direction: column; align-items: flex-start; line-height: 1.2; }
+.filter button small { font-weight: 400; color: var(--muted); font-size: 0.75rem; }
+.filter button:hover { border-color: var(--accent); }
+.filter button[aria-pressed="true"] { border-color: var(--accent); background: rgba(201, 165, 74, 0.12); }
+.filter-empty { color: var(--muted); }
+
+.badges { display: flex; gap: 0.4rem; margin-top: 0.4rem; }
+.badge { display: inline-block; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.05em; padding: 0.1rem 0.4rem; border-radius: 3px; border: 1px solid var(--line); color: var(--muted); vertical-align: middle; }
+.badge-6k { border-color: var(--accent); color: var(--accent); }
+.badge-5k { color: var(--fg); border-color: var(--muted); }
+.badge-short { font-weight: 400; }

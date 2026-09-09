@@ -1,0 +1,12 @@
+{{- $licenses := dict
+  "PD" (dict "label" "Public domain" "url" "https://en.wikipedia.org/wiki/Public_domain")
+  "CC0" (dict "label" "CC0 1.0" "url" "https://creativecommons.org/publicdomain/zero/1.0/")
+  "CC-BY-4.0" (dict "label" "CC BY 4.0" "url" "https://creativecommons.org/licenses/by/4.0/")
+-}}
+{{- $lic := index $licenses .Params.license -}}
+<p class="attribution">
+  {{ .Params.artist }}, <em>{{ .Title }}</em> ({{ .Params.year }}){{ with .Params.medium }}, {{ . }}{{ end }}.
+  {{ with .Params.institution }}{{ . }}.{{ end }}
+  {{ with .Params.source }}<a href="{{ . }}" rel="noopener">Source</a>.{{ else }}Source not recorded.{{ end }}
+  {{ with $lic }}<a href="{{ .url }}" rel="license noopener">{{ .label }}</a>.{{ else }}License: {{ $.Params.license }}.{{ end }}
+</p>

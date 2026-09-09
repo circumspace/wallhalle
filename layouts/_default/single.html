@@ -1,0 +1,7 @@
+{{ define "main" }}
+<article class="page">
+  <h1>{{ .Title }}</h1>
+  {{ .Content }}
+</article>
+{{ if eq .File.ContentBaseName "donate" }}{{ partial "donate.html" . }}{{ end }}
+{{ end }}

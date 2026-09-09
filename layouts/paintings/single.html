@@ -1,0 +1,40 @@
+{{ define "main" }}
+{{ $slug := .File.ContentBaseName }}
+{{ $d := index site.Data.derived $slug }}
+<article class="painting">
+  <picture class="preview">
+    <source srcset="{{ printf "/w/%s/preview.webp" $slug | relURL }}" type="image/webp">
+    <img src="{{ printf "/w/%s/preview.jpg" $slug | relURL }}" alt="{{ .Title }} by {{ .Params.artist }}" width="1600">
+  </picture>
+  <h1>{{ .Title }}</h1>
+  <p class="byline">{{ .Params.artist }}, {{ .Params.year }}{{ with .Params.medium }}, {{ . }}{{ end }}</p>
+
+  <h2>Download</h2>
+  {{ if $d }}
+  <table class="downloads">
+    <thead><tr><th>File</th><th>Resolution</th><th>Size</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><a href="{{ printf "/dl/%s/%s" $slug $d.original.file | relURL }}" download>Original scan</a></td>
+        <td>{{ $d.original.width }} x {{ $d.original.height }}</td>
+        <td>{{ partial "filesize.html" $d.original.bytes }}</td>
+      </tr>
+      {{ range $d.variants }}
+      <tr>
+        <td><a href="{{ printf "/dl/%s/%s" $slug .file | relURL }}" download>{{ .aspect }} cut</a>{{ if .full }} <span class="badge badge-{{ .class }}">{{ upper .class }}</span>{{ if gt .upscale 1.0 }} <span class="badge badge-short">upscaled {{ printf "%.1f%%" (mul (sub .upscale 1.0) 100) }}</span>{{ end }}{{ else }} <span class="badge badge-short">native size</span>{{ end }}</td>
+        <td>{{ .width }} x {{ .height }}</td>
+        <td>{{ partial "filesize.html" .bytes }}</td>
+      </tr>
+      {{ end }}
+    </tbody>
+  </table>
+  <p class="note">The original is the museum file as published, bytes untouched. Cuts are cropped around a hand-set focal point. A scan that misses a tier by under one percent is upscaled that last step and marked so. Where the scan is too small for a tier, the cut is offered at the largest size the scan allows and marked native size.</p>
+  {{ else }}
+  <p class="note">Derived files missing. Run <code>scripts/derive.sh</code>.</p>
+  {{ end }}
+
+  {{ partial "attribution.html" . }}
+  {{ .Content }}
+</article>
+{{ partial "donate.html" . }}
+{{ end }}

@@ -1,0 +1,36 @@
+{{- $d := site.Params.donate -}}
+{{- $rows := slice -}}
+{{- with $d.bitcoin }}{{ $rows = $rows | append (dict "name" "Bitcoin" "addr" . "uri" (printf "bitcoin:%s" .) "qr" "bitcoin") }}{{ end -}}
+{{- with $d.bitcoin_sp }}{{ $rows = $rows | append (dict "name" "Bitcoin silent payment" "addr" . "uri" (printf "bitcoin:%s" .) "qr" "bitcoin_sp") }}{{ end -}}
+{{- with $d.lightning }}{{ $rows = $rows | append (dict "name" "Lightning" "addr" . "uri" (printf "lightning:%s" .) "qr" "lightning") }}{{ end -}}
+{{- with $d.monero }}{{ $rows = $rows | append (dict "name" "Monero" "addr" . "uri" (printf "monero:%s" .) "qr" "monero") }}{{ end -}}
+{{- if $rows }}
+<section class="donate" id="donate">
+  <h2>Donate</h2>
+  <ul class="donate-rows">
+    {{ range $rows }}
+    <li>
+      <img class="qr" src="{{ printf "/qr/%s.svg" .qr | relURL }}" alt="QR code for {{ .name }}" width="160" height="160">
+      <div>
+        <h3>{{ .name }}</h3>
+        <code class="addr">{{ .addr }}</code>
+        <p class="actions">
+          <button type="button" data-copy="{{ .addr }}">Copy</button>
+          <a href="{{ .uri }}">Open in wallet</a>
+        </p>
+      </div>
+    </li>
+    {{ end }}
+  </ul>
+</section>
+<script>
+document.querySelectorAll('button[data-copy]').forEach(function (b) {
+  b.addEventListener('click', function () {
+    navigator.clipboard.writeText(b.dataset.copy).then(function () {
+      b.textContent = 'Copied';
+      setTimeout(function () { b.textContent = 'Copy'; }, 1500);
+    });
+  });
+});
+</script>
+{{- end }}

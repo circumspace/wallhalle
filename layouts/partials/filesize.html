@@ -1,0 +1,2 @@
+{{- $b := float . -}}
+{{- if ge $b 1048576.0 }}{{ printf "%.1f MB" (div $b 1048576.0) }}{{ else }}{{ printf "%.0f kB" (div $b 1024.0) }}{{ end -}}
