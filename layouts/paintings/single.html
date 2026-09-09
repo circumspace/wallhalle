@@ -9,6 +9,7 @@
   <h1>{{ .Title }}</h1>
   <p class="byline">{{ .Params.artist }}{{ with .Params.year }}, {{ . }}{{ end }}{{ with .Params.medium }}, {{ . }}{{ end }}</p>
 
+  {{ partial "notice.html" . }}
   <h2>Download</h2>
   {{ if $d }}
   <table class="downloads">

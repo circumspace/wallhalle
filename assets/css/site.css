@@ -76,3 +76,6 @@ nav a:hover { color: var(--fg); }
 .badge-6k { border-color: var(--accent); color: var(--accent); }
 .badge-5k { color: var(--fg); border-color: var(--muted); }
 .badge-short { font-weight: 400; }
+
+.notice { max-width: 720px; margin: 0 0 2rem; padding: 0.9rem 1.1rem; border-left: 3px solid var(--accent); background: var(--panel); border-radius: 0 6px 6px 0; color: var(--muted); font-size: 0.95rem; }
+.notice strong { color: var(--fg); display: block; margin-bottom: 0.2rem; }

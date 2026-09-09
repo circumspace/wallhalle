@@ -3,6 +3,7 @@
   <h1>{{ site.Params.tagline }}</h1>
   <p>Museum scans of paintings, offered untouched at their full resolution, plus exact cuts for 16:9 and 16:10 screens. Free to download. <a href="{{ "/donate/" | relURL }}">Donations</a> keep it going.</p>
 </section>
+{{ partial "notice.html" . }}
 <nav class="filter" aria-label="Filter by display size">
   <span class="filter-label">Show wallpapers that fill</span>
   <button type="button" data-fit="" aria-pressed="true">All</button>
