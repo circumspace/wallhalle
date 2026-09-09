@@ -6,7 +6,7 @@
 set -eu
 cd "$(dirname "$0")/.."
 
-UA="wallpaintr-fetch/1 (static wallpaper gallery; contact via repo)"
+UA="wallhalle-fetch/1 (static wallpaper gallery; contact via repo)"
 fm() { yq --front-matter=extract -r "$1" "$2"; }
 
 fail=0

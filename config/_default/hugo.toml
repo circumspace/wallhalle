@@ -1,5 +1,5 @@
-baseURL = "http://localhost:1313/"
-title = "wallpaintr"
+baseURL = "https://wallhalle.circum.space/"
+title = "wallhalle"
 languageCode = "en"
 disableKinds = ["taxonomy", "term", "rss", "sitemap"]
 enableRobotsTXT = true
