@@ -13,4 +13,4 @@ ln -s "$DATA/originals" originals
 ln -s "$DATA/dl" static/dl
 scripts/fetch.sh
 DERIVE_CUTS_ONLY=1 scripts/derive.sh
-echo "cluster-sync: $(ls originals | wc -l) originals, $(find static/dl -type f | wc -l) files in dl"
+echo "cluster-sync: $(ls originals | wc -l) originals, $(find static/dl/ -type f | wc -l) files in dl"
