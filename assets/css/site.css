@@ -76,3 +76,7 @@ nav a:hover { color: var(--fg); }
 .badge-6k { border-color: var(--accent); color: var(--accent); }
 .badge-5k { color: var(--fg); border-color: var(--muted); }
 .badge-short { font-weight: 400; }
+
+pre { background: var(--panel); padding: 1rem; border-radius: 6px; overflow-x: auto; font-size: 0.85rem; line-height: 1.4; }
+.page h2 { font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin: 2.5rem 0 1rem; }
+.page code { font-size: 0.9em; }

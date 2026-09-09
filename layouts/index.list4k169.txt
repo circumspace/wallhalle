@@ -1,0 +1,1 @@
+{{- partial "list.txt" (dict "tier" "4k" "aspect" "16:9") -}}

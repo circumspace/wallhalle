@@ -1,0 +1,10 @@
+{{- /* One absolute URL per line: for every painting, the first full-size cut of the given tier and aspect. Cuts are ordered largest first, so a 6K list carries one file per painting. Takes a dict with "tier" and "aspect". */ -}}
+{{- range partial "catalogue.html" . -}}
+  {{- $picked := false -}}
+  {{- range .cuts -}}
+    {{- if and (not $picked) .full (eq .tier $.tier) (eq .aspect $.aspect) -}}
+      {{- $picked = true -}}
+{{ .url }}
+{{ end -}}
+  {{- end -}}
+{{- end -}}

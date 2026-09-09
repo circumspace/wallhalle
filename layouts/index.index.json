@@ -1,0 +1,16 @@
+{{- $paintings := partial "catalogue.html" . -}}
+{{- dict
+  "site" site.Title
+  "base" site.BaseURL
+  "generated" (now.Format "2006-01-02T15:04:05Z07:00")
+  "tiers" (dict
+    "6k" (slice "6144x3456" "6016x3384")
+    "5k" (slice "5120x2880" "5120x3200")
+    "4k" (slice "3840x2160"))
+  "lists" (dict
+    "6k-16x9" ("/lists/6k-16x9.txt" | absURL)
+    "5k-16x9" ("/lists/5k-16x9.txt" | absURL)
+    "5k-16x10" ("/lists/5k-16x10.txt" | absURL)
+    "4k-16x9" ("/lists/4k-16x9.txt" | absURL))
+  "paintings" $paintings
+| jsonify (dict "indent" "  ") -}}

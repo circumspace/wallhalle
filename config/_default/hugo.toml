@@ -4,6 +4,41 @@ languageCode = "en"
 disableKinds = ["taxonomy", "term", "rss", "sitemap"]
 enableRobotsTXT = true
 
+[outputs]
+  home = ["HTML", "index", "list6k169", "list5k169", "list5k1610", "list4k169"]
+
+[mediaTypes."text/plain"]
+  suffixes = ["txt"]
+
+[outputFormats.index]
+  mediaType = "application/json"
+  baseName = "index"
+  isPlainText = true
+
+[outputFormats.list6k169]
+  mediaType = "text/plain"
+  baseName = "6k-16x9"
+  path = "lists"
+  isPlainText = true
+
+[outputFormats.list5k169]
+  mediaType = "text/plain"
+  baseName = "5k-16x9"
+  path = "lists"
+  isPlainText = true
+
+[outputFormats.list5k1610]
+  mediaType = "text/plain"
+  baseName = "5k-16x10"
+  path = "lists"
+  isPlainText = true
+
+[outputFormats.list4k169]
+  mediaType = "text/plain"
+  baseName = "4k-16x9"
+  path = "lists"
+  isPlainText = true
+
 [params]
   tagline = "Paintings of the sublime, sized for large screens"
 

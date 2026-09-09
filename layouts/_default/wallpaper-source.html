@@ -1,0 +1,42 @@
+{{ define "main" }}
+{{ $lists := slice
+  (dict "id" "6k-16x9" "label" "6K, 16:9" "size" "6144 x 3456" "for" "Apple Pro Display XDR, Dell U3224KB")
+  (dict "id" "5k-16x9" "label" "5K, 16:9" "size" "5120 x 2880" "for" "Apple Studio Display, iMac 27, LG UltraFine 5K")
+  (dict "id" "5k-16x10" "label" "5K, 16:10" "size" "5120 x 3200" "for" "16:10 laptops, scaled down by the OS")
+  (dict "id" "4k-16x9" "label" "4K, 16:9" "size" "3840 x 2160" "for" "any UHD screen")
+}}
+<article class="page">
+  <h1>{{ .Title }}</h1>
+  <p>Neither macOS nor Linux desktops subscribe to a web address for wallpapers, but both rotate through a folder. So the site publishes plain lists of download links, one per screen size, and you sync a list into a folder once in a while.</p>
+
+  <h2>Pick a list</h2>
+  <table class="downloads">
+    <thead><tr><th>List</th><th>Cut</th><th>Fits</th></tr></thead>
+    <tbody>
+      {{ range $lists }}
+      <tr>
+        <td><a href="{{ printf "/lists/%s.txt" .id | relURL }}"><code>{{ .id }}.txt</code></a></td>
+        <td>{{ .size }}</td>
+        <td>{{ .for }}</td>
+      </tr>
+      {{ end }}
+    </tbody>
+  </table>
+  <p class="note">Each list holds one absolute URL per line and only paintings whose cut fills that size. Lists grow as paintings are added; re-running a sync fetches the whole list again.</p>
+
+  <h2>macOS</h2>
+  <p>Downloads every 5K 16:9 cut into <code>~/Pictures/wallpaintr</code>. Swap the list name for another size.</p>
+  <pre><code>mkdir -p ~/Pictures/wallpaintr &amp;&amp; curl -sZ --remote-name-all --output-dir ~/Pictures/wallpaintr $(curl -s {{ "/lists/5k-16x9.txt" | absURL }})</code></pre>
+  <p>Then System Settings, Wallpaper, Add Folder or Album, pick the folder and turn on rotation.</p>
+
+  <h2>Omarchy</h2>
+  <p>Omarchy cycles through <code>~/.config/omarchy/backgrounds/&lt;theme&gt;/</code> with Super+Ctrl+Space. This fills the folder of the theme currently active.</p>
+  <pre><code>theme=$(basename "$(readlink ~/.config/omarchy/current/theme)") &amp;&amp; mkdir -p ~/.config/omarchy/backgrounds/$theme &amp;&amp; curl -sZ --remote-name-all --output-dir ~/.config/omarchy/backgrounds/$theme $(curl -s {{ "/lists/5k-16x9.txt" | absURL }})</code></pre>
+  <p>Other Linux desktops: point the wallpaper slideshow at any folder you sync the same way.</p>
+
+  <h2>Everything, as JSON</h2>
+  <p><a href="{{ "/index.json" | relURL }}"><code>index.json</code></a> lists every painting with title, artist, licence, source, original and all cuts with their pixel sizes, byte counts and URLs, plus which tier each cut fills. Build your own picker from it.</p>
+  <p class="note">A full 6K list is around 700 MB. Start with one list, not all four.</p>
+</article>
+{{ partial "donate.html" . }}
+{{ end }}

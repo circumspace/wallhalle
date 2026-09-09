@@ -52,8 +52,8 @@ Everything runs in a container built from `Containerfile.dev` (Alpine with hugo,
 |---|---|
 | `static/w/<slug>/thumb.webp` | 480px wide, gallery grid |
 | `static/w/<slug>/preview.webp`, `preview.jpg` | 1600px wide, painting page |
-| `static/dl/<slug>/original.<ext>` | byte-identical copy of the source, extension preserved |
-| `static/dl/<slug>/<w>x<h>.jpg` | fitted cuts, see the tier table below |
+| `static/dl/<slug>/<slug>-original.<ext>` | byte-identical copy of the source, extension preserved |
+| `static/dl/<slug>/<slug>-<w>x<h>.jpg` | fitted cuts, see the tier table below. File names carry the slug so a folder sync does not collide. |
 | `data/derived/<slug>.json` | real pixel sizes and byte counts, read by the download table |
 | `static/qr/<name>.svg` | QR codes for the configured donation addresses |
 
@@ -72,6 +72,17 @@ Only 16:9 exists at 5K and above among conventional monitors. 3:2 and 4:3 panels
 A crop box that misses its target by at most 1% (`UPSCALE_TOLERANCE` in `scripts/derive.sh`) is upscaled to the target, counts as full, and its page shows the factor. Beyond that nothing is upscaled: when the crop box is smaller than the target, the file is emitted at the box's native size, flagged `full: false` in the JSON, and named by its real dimensions; two targets that collapse to the same box produce one file. The gallery filter (All / 6K / 5K / 4K) counts only full-size cuts, so a painting is listed under 5K only if at least one 5K target came out at exactly that size.
 
 All of these paths are generated and gitignored.
+
+## Machine-readable outputs
+
+Hugo renders the home page in extra output formats (configured in `hugo.toml` under `[outputs]` and `[outputFormats.*]`):
+
+| Path | Content |
+|---|---|
+| `/index.json` | every painting with metadata, original and cuts as absolute URLs, tier and full-size flag per cut |
+| `/lists/6k-16x9.txt`, `/lists/5k-16x9.txt`, `/lists/5k-16x10.txt`, `/lists/4k-16x9.txt` | one URL per line, only full-size cuts of that tier and aspect |
+
+`/wallpaper-source/` explains how to sync a list into a folder for macOS and Omarchy. Both templates read the shared `layouts/partials/catalogue.html`, so a new painting appears everywhere once its derived data exists. URLs are absolute, so `baseURL` must be right for the deployment.
 
 ## Licenses
 

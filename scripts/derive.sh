@@ -52,7 +52,7 @@ for md in content/paintings/*.md; do
   stale "$web/preview.webp" "$orig" && vips thumbnail "$orig" "$web/preview.webp[Q=84,strip]" 1600
   stale "$web/preview.jpg" "$orig" && vips thumbnail "$orig" "$web/preview.jpg[Q=86,strip]" 1600
   ext=${orig##*.}
-  stale "$dl/original.$ext" "$orig" && cp "$orig" "$dl/original.$ext"
+  stale "$dl/$slug-original.$ext" "$orig" && cp "$orig" "$dl/$slug-original.$ext"
 
   fx=$(fm '.focal[0] // 0.5' "$md"); fy=$(fm '.focal[1] // 0.5' "$md")
   variants=""
@@ -77,7 +77,7 @@ for md in content/paintings/*.md; do
       ow=$bw; oh=$bh; full=false
     fi
     upscale=$(awk -v a="$ow" -v b="$bw" 'BEGIN { s = a / b; if (s < 1) s = 1; printf "%.4f", s }')
-    name="${ow}x${oh}.jpg"
+    name="$slug-${ow}x${oh}.jpg"
     case " $seen " in *" $name "*) continue ;; esac
     seen="$seen $name"
     out="$dl/$name"
@@ -97,12 +97,12 @@ for md in content/paintings/*.md; do
 
   for f in "$dl"/*.jpg; do
     n=$(basename "$f")
-    case " original.$ext$seen " in *" $n "*) ;; *) rm -f "$f" ;; esac
+    case " $slug-original.$ext$seen " in *" $n "*) ;; *) rm -f "$f" ;; esac
   done
 
   mkdir -p data/derived
-  printf '{"original":{"file":"original.%s","width":%s,"height":%s,"bytes":%s},"variants":[%s]}\n' \
-    "$ext" "$w" "$h" "$(bytes "$orig")" "${variants%,}" > "data/derived/$slug.json"
+  printf '{"original":{"file":"%s-original.%s","width":%s,"height":%s,"bytes":%s},"variants":[%s]}\n' \
+    "$slug" "$ext" "$w" "$h" "$(bytes "$orig")" "${variants%,}" > "data/derived/$slug.json"
 done
 
 for d in static/dl/* static/w/*; do

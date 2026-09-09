@@ -1,0 +1,27 @@
+{{- /* Returns the machine-readable catalogue: one entry per painting with absolute URLs for the original and every cut. */ -}}
+{{- $out := slice -}}
+{{- range sort (where site.RegularPages "Section" "paintings") "Params.artist" -}}
+  {{- $slug := .File.ContentBaseName -}}
+  {{- $d := index site.Data.derived $slug -}}
+  {{- if $d -}}
+    {{- $cuts := slice -}}
+    {{- range $d.variants -}}
+      {{- $cuts = $cuts | append (dict "aspect" .aspect "tier" .class "full" .full "upscale" .upscale "width" .width "height" .height "bytes" .bytes "url" (printf "/dl/%s/%s" $slug .file | absURL)) -}}
+    {{- end -}}
+    {{- $out = $out | append (dict
+      "slug" $slug
+      "title" .Title
+      "artist" .Params.artist
+      "year" .Params.year
+      "medium" .Params.medium
+      "institution" .Params.institution
+      "source" .Params.source
+      "license" .Params.license
+      "page" .Permalink
+      "preview" (printf "/w/%s/preview.jpg" $slug | absURL)
+      "thumb" (printf "/w/%s/thumb.webp" $slug | absURL)
+      "original" (dict "width" $d.original.width "height" $d.original.height "bytes" $d.original.bytes "url" (printf "/dl/%s/%s" $slug $d.original.file | absURL))
+      "cuts" $cuts) -}}
+  {{- end -}}
+{{- end -}}
+{{- return $out -}}
