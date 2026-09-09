@@ -5,7 +5,7 @@
 -}}
 {{- $lic := index $licenses .Params.license -}}
 <p class="attribution">
-  {{ .Params.artist }}, <em>{{ .Title }}</em> ({{ .Params.year }}){{ with .Params.medium }}, {{ . }}{{ end }}.
+  {{ .Params.artist }}, <em>{{ .Title }}</em>{{ with .Params.year }} ({{ . }}){{ end }}{{ with .Params.medium }}, {{ . }}{{ end }}.
   {{ with .Params.institution }}{{ . }}.{{ end }}
   {{ with .Params.source }}<a href="{{ . }}" rel="noopener">Source</a>.{{ else }}Source not recorded.{{ end }}
   {{ with $lic }}<a href="{{ .url }}" rel="license noopener">{{ .label }}</a>.{{ else }}License: {{ $.Params.license }}.{{ end }}

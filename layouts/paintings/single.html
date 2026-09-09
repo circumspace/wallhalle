@@ -7,7 +7,7 @@
     <img src="{{ printf "/w/%s/preview.jpg" $slug | relURL }}" alt="{{ .Title }} by {{ .Params.artist }}" width="1600">
   </picture>
   <h1>{{ .Title }}</h1>
-  <p class="byline">{{ .Params.artist }}, {{ .Params.year }}{{ with .Params.medium }}, {{ . }}{{ end }}</p>
+  <p class="byline">{{ .Params.artist }}{{ with .Params.year }}, {{ . }}{{ end }}{{ with .Params.medium }}, {{ . }}{{ end }}</p>
 
   <h2>Download</h2>
   {{ if $d }}

@@ -11,7 +11,7 @@
   <button type="button" data-fit="4k" aria-pressed="false">4K <small>3840 x 2160</small></button>
 </nav>
 <ul class="gallery">
-  {{ range where site.RegularPages "Section" "paintings" }}
+  {{ range sort (where site.RegularPages "Section" "paintings") "Params.artist" }}
   {{ $slug := .File.ContentBaseName }}
   {{ $d := index site.Data.derived $slug }}
   {{ $fits := slice }}
@@ -19,7 +19,7 @@
   <li data-fit="{{ delimit $fits " " }}">
     <a href="{{ .RelPermalink }}">
       <img src="{{ printf "/w/%s/thumb.webp" $slug | relURL }}" alt="{{ .Title }} by {{ .Params.artist }}" loading="lazy" width="480">
-      <span class="caption"><strong>{{ .Title }}</strong><br>{{ .Params.artist }}, {{ .Params.year }}</span>
+      <span class="caption"><strong>{{ .Title }}</strong><br>{{ .Params.artist }}{{ with .Params.year }}, {{ . }}{{ end }}</span>
       <span class="badges">{{ range $fits }}<span class="badge badge-{{ . }}">{{ upper . }}</span>{{ end }}</span>
     </a>
   </li>

@@ -1,4 +1,4 @@
 FROM alpine:3.22
-RUN apk add --no-cache hugo vips-tools libqrencode-tools yq git git-lfs
+RUN apk add --no-cache hugo vips-tools libqrencode-tools yq git git-lfs curl
 WORKDIR /src
 EXPOSE 1313

@@ -43,7 +43,8 @@ Everything runs in a container built from `Containerfile.dev` (Alpine with hugo,
      16x9: [0, 400, 7119, 4004]   # x y width height
    ```
 
-4. Run `./dev.sh` and check the cuts on the painting page.
+4. Run `scripts/fetch.sh` (inside the dev container) if the file is not yet in `originals/`. It downloads from a `download:` URL when set, otherwise from the Wikimedia Commons file page in `source:`.
+5. Run `./dev.sh` and check the cuts on the painting page.
 
 ## What derive.sh produces
 
@@ -51,7 +52,7 @@ Everything runs in a container built from `Containerfile.dev` (Alpine with hugo,
 |---|---|
 | `static/w/<slug>/thumb.webp` | 480px wide, gallery grid |
 | `static/w/<slug>/preview.webp`, `preview.jpg` | 1600px wide, painting page |
-| `static/dl/<slug>/original.jpg` | byte-identical copy of the source |
+| `static/dl/<slug>/original.<ext>` | byte-identical copy of the source, extension preserved |
 | `static/dl/<slug>/<w>x<h>.jpg` | fitted cuts, see the tier table below |
 | `data/derived/<slug>.json` | real pixel sizes and byte counts, read by the download table |
 | `static/qr/<name>.svg` | QR codes for the configured donation addresses |
@@ -83,9 +84,11 @@ Addresses live in `config/_default/hugo.toml` under `[params.donate]`. They are 
 ## Open items
 
 - The Kircher painting (`alexander-kircher-toteninsel`) has no recorded source or institution. The file arrived without provenance.
-- Institution and source fields for the other samples were filled from the original filenames and should be checked against the museum pages.
+- Institution, year and medium for the pulled paintings were filled from memory and file names. Pages with an empty `year` or `institution` need a lookup; every entry deserves a check against the museum page before the site goes public.
+- Two Commons titles use a typographic apostrophe (U+2019), not ASCII. `source` must match the Commons title byte for byte or `scripts/fetch.sh` finds nothing.
+- `scripts/fetch.sh` stalls when run through the podman VM (Wikimedia throttles that path); run the download loop on the host, then derive in the container.
 - `content/impressum.md` is a placeholder.
-- Growth watch point: 8 paintings produce about 120 MB of downloads. The container image that will eventually serve the site carries all of it.
+- Size: 63 paintings are 1.1 GB of originals and 2.4 GB of cuts. That is far beyond what a container image should carry, so the deployment round needs a volume or object store for `dl/`, not the baked-image pattern the blog uses. The Pompeii original alone is 217 MB and the Cleveland TIFF 110 MB.
 
 ## Not in this repo yet
 

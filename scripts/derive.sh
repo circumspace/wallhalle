@@ -51,7 +51,8 @@ for md in content/paintings/*.md; do
   stale "$web/thumb.webp" "$orig" && vips thumbnail "$orig" "$web/thumb.webp[Q=82,strip]" 480
   stale "$web/preview.webp" "$orig" && vips thumbnail "$orig" "$web/preview.webp[Q=84,strip]" 1600
   stale "$web/preview.jpg" "$orig" && vips thumbnail "$orig" "$web/preview.jpg[Q=86,strip]" 1600
-  stale "$dl/original.jpg" "$orig" && cp "$orig" "$dl/original.jpg"
+  ext=${orig##*.}
+  stale "$dl/original.$ext" "$orig" && cp "$orig" "$dl/original.$ext"
 
   fx=$(fm '.focal[0] // 0.5' "$md"); fy=$(fm '.focal[1] // 0.5' "$md")
   variants=""
@@ -96,12 +97,21 @@ for md in content/paintings/*.md; do
 
   for f in "$dl"/*.jpg; do
     n=$(basename "$f")
-    case " original.jpg$seen " in *" $n "*) ;; *) rm -f "$f" ;; esac
+    case " original.$ext$seen " in *" $n "*) ;; *) rm -f "$f" ;; esac
   done
 
   mkdir -p data/derived
-  printf '{"original":{"file":"original.jpg","width":%s,"height":%s,"bytes":%s},"variants":[%s]}\n' \
-    "$w" "$h" "$(bytes "$orig")" "${variants%,}" > "data/derived/$slug.json"
+  printf '{"original":{"file":"original.%s","width":%s,"height":%s,"bytes":%s},"variants":[%s]}\n' \
+    "$ext" "$w" "$h" "$(bytes "$orig")" "${variants%,}" > "data/derived/$slug.json"
+done
+
+for d in static/dl/* static/w/*; do
+  [ -d "$d" ] || continue
+  [ -e "content/paintings/$(basename "$d").md" ] || rm -rf "$d"
+done
+for j in data/derived/*.json; do
+  [ -e "$j" ] || continue
+  [ -e "content/paintings/$(basename "$j" .json).md" ] || rm -f "$j"
 done
 
 cfg=config/_default/hugo.toml
