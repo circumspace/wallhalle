@@ -43,6 +43,8 @@ Candidate scans can be dropped into `incoming/`, which is gitignored; check thei
      16x9: [0, 400, 7119, 4004]   # x y width height
    ```
 
+   A scan with a border or book edge takes `trim: [left, top, right, bottom]` in pixels; cuts, previews and thumbnails are taken from the trimmed area, the original stays untouched.
+
    Tall paintings that only work as several wide cuts take a `slices` list instead of one focal point. Each slice names its files, has its own focal point (and optional `crops`), and gets its own preview on the page:
 
    ```yaml

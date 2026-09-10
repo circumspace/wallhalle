@@ -50,10 +50,22 @@ for md in content/paintings/*.md; do
   web="static/w/$slug"; dl="static/dl/$slug"
   mkdir -p "$web" "$dl"
 
+  # `trim: [left, top, right, bottom]` in pixels shaves scan margins (book
+  # edges, white borders) off the area cuts and previews are taken from.
+  # The original file is never altered.
+  tl=$(fm '.trim[0] // 0' "$md"); tt=$(fm '.trim[1] // 0' "$md")
+  tr_=$(fm '.trim[2] // 0' "$md"); tb=$(fm '.trim[3] // 0' "$md")
+  uw=$((w - tl - tr_)); uh=$((h - tt - tb))
+
   if [ -z "${DERIVE_CUTS_ONLY:-}" ]; then
-    stale "$web/thumb.webp" "$orig" && vips thumbnail "$orig" "$web/thumb.webp[Q=82,strip]" 480
-    stale "$web/preview.webp" "$orig" && vips thumbnail "$orig" "$web/preview.webp[Q=84,strip]" 1600
-    stale "$web/preview.jpg" "$orig" && vips thumbnail "$orig" "$web/preview.jpg[Q=86,strip]" 1600
+    if stale "$web/thumb.webp" "$orig" "$md" || stale "$web/preview.webp" "$orig" "$md"; then
+      tmp=$(mktemp -u).v
+      vips extract_area "$orig" "$tmp" "$tl" "$tt" "$uw" "$uh"
+      vips thumbnail "$tmp" "$web/thumb.webp[Q=82,strip]" 480
+      vips thumbnail "$tmp" "$web/preview.webp[Q=84,strip]" 1600
+      vips thumbnail "$tmp" "$web/preview.jpg[Q=86,strip]" 1600
+      rm -f "$tmp"
+    fi
   fi
   ext=${orig##*.}
   if stale "$dl/original.$ext" "$orig"; then
@@ -80,13 +92,13 @@ for md in content/paintings/*.md; do
       key=$(echo "$aspect" | tr ':' 'x')
       box=$(fm "$base.crops.\"$key\" // [] | join(\" \")" "$md")
       if [ -z "$box" ]; then
-        box=$(awk -v W="$w" -v H="$h" -v a="$tw/$th" -v fx="$fx" -v fy="$fy" 'BEGIN {
+        box=$(awk -v W="$uw" -v H="$uh" -v ox="$tl" -v oy="$tt" -v a="$tw/$th" -v fx="$fx" -v fy="$fy" 'BEGIN {
           split(a, r, "/"); ar = r[1] / r[2];
           if (W / H > ar) { bh = H; bw = int(H * ar) } else { bw = W; bh = int(W / ar) }
           x = int(fx * W - bw / 2 + 0.5); y = int(fy * H - bh / 2 + 0.5);
           if (x < 0) x = 0; if (y < 0) y = 0;
           if (x + bw > W) x = W - bw; if (y + bh > H) y = H - bh;
-          print x, y, bw, bh }')
+          print x + ox, y + oy, bw, bh }')
       fi
       set -- $box; bx=$1; by=$2; bw=$3; bh=$4
       if [ -n "$slice" ] && [ "$aspect" = "16:9" ] && [ -z "$preview_done" ] && [ -z "${DERIVE_CUTS_ONLY:-}" ]; then

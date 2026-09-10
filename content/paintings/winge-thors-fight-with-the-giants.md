@@ -8,6 +8,7 @@ source: "https://commons.wikimedia.org/wiki/File:Thor's_Battle_Against_the_Jötn
 license: PD
 original: winge-thors-fight-with-the-giants.jpg
 focal: [0.5, 0.5]
+trim: [2, 6, 14, 4]
 slices:
   - name: thor
     title: "Thor and Mjölnir"
