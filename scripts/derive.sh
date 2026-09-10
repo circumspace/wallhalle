@@ -130,6 +130,12 @@ for md in content/paintings/*.md; do
     n=$(basename "$f")
     case " original.$ext$seen " in *" $n "*) ;; *) rm -f "$f" ;; esac
   done
+  slice_names=" $(fm '.slices[].name' "$md" 2>/dev/null | tr '\n' ' ')"
+  for f in "$web"/*-preview.*; do
+    [ -e "$f" ] || continue
+    n=$(basename "$f"); n=${n%-preview.*}
+    case "$slice_names" in *" $n "*) ;; *) rm -f "$f" ;; esac
+  done
 
   mkdir -p data/derived
   printf '{"original":{"file":"original.%s","width":%s,"height":%s,"bytes":%s},"variants":[%s]}\n' \
