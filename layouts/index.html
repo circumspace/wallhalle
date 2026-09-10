@@ -17,14 +17,15 @@
   {{ $page := . }}
   {{ $d := index site.Data.derived $slug }}
   {{ if .Params.slices }}
-  {{ range .Params.slices }}
+  {{ $n := len .Params.slices }}
+  {{ range $i, $s := .Params.slices }}
   {{ $fits := slice }}
   {{ range where $d.variants "slice" .name }}{{ if and .full (not (in $fits .class)) }}{{ $fits = $fits | append .class }}{{ end }}{{ end }}
   <li data-fit="{{ delimit $fits " " }}">
     <a href="{{ $page.RelPermalink }}#{{ .name }}">
       <img src="{{ printf "/w/%s/%s-thumb.webp" $slug .name | relURL }}" alt="{{ .title | default .name }}, cut from {{ $page.Title }} by {{ $page.Params.artist }}" loading="lazy" width="480">
       <span class="caption"><strong>{{ $page.Title }}</strong> <span class="slice-name">{{ .title | default .name }}</span><br>{{ $page.Params.artist }}{{ with $page.Params.year }}, {{ . }}{{ end }}</span>
-      <span class="badges">{{ range $fits }}<span class="badge badge-{{ . }}">{{ upper . }}</span>{{ end }}</span>
+      <span class="badges"><span class="badge badge-slice" title="One of {{ $n }} wide cuts from a tall painting">slice {{ add $i 1 }} of {{ $n }}</span>{{ range $fits }}<span class="badge badge-{{ . }}">{{ upper . }}</span>{{ end }}</span>
     </a>
   </li>
   {{ end }}

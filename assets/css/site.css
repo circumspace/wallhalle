@@ -87,3 +87,5 @@ nav a:hover { color: var(--fg); }
 .gallery .slice-name { color: var(--muted); }
 .gallery .slice-name::before { content: "\00b7 "; }
 .slice { scroll-margin-top: 1rem; }
+.badge-slice { border-style: dashed; color: var(--fg); }
+.slice h3 .badge { margin-left: 0.4rem; }

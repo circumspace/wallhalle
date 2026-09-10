@@ -14,10 +14,10 @@
   {{ if $d }}
   {{ if .Params.slices }}
   <p class="note">A tall painting: it is offered as {{ len .Params.slices }} wide cuts, each around its own part of the scene, plus the untouched scan.</p>
-  {{ range .Params.slices }}
-  {{ $slice := . }}
+  {{ $n := len .Params.slices }}
+  {{ range $i, $slice := .Params.slices }}
   <section class="slice" id="{{ .name }}">
-    <h3>{{ .title | default .name }}</h3>
+    <h3>{{ .title | default .name }} <span class="badge badge-slice">slice {{ add $i 1 }} of {{ $n }}</span></h3>
     <picture class="slice-preview">
       <source srcset="{{ printf "/w/%s/%s-preview.webp" $slug .name | relURL }}" type="image/webp">
       <img src="{{ printf "/w/%s/%s-preview.jpg" $slug .name | relURL }}" alt="{{ .title | default .name }}, cut from {{ $.Title }}" width="1600" loading="lazy">
