@@ -23,6 +23,10 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v7
+      - name: build site and check links
+        run: |
+          docker run --rm -v "$PWD:/src" -w /src alpine:3.22 sh -c \
+            'apk add --no-cache hugo >/dev/null && hugo --minify --cleanDestinationDir && scripts/check-links.sh'
       - name: build images
         run: |
           TAG="$(date +%s)-$(git rev-parse --short HEAD)"

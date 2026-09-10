@@ -66,8 +66,10 @@ Candidate scans can be dropped into `incoming/`, which is gitignored; check thei
 |---|---|
 | `static/w/<slug>/thumb.webp` | 480px wide, gallery grid |
 | `static/w/<slug>/preview.webp`, `preview.jpg` | 1600px wide, painting page |
-| `static/dl/<slug>/original.<ext>` | byte-identical copy of the source, extension preserved |
-| `static/dl/<slug>/<w>x<h>.jpg` | fitted cuts, see the tier table below |
+| `static/dl/<slug>/<slug>-original.<ext>` | byte-identical copy of the source, extension preserved |
+| `static/dl/<slug>/<slug>-<w>x<h>.jpg` | fitted cuts, see the tier table below; slices insert their name: `<slug>-<slice>-<w>x<h>.jpg` |
+
+File names carry the slug so cuts from many paintings can share one folder without renaming. `scripts/check-links.sh` verifies that every `/dl/`, `/w/` and `/qr/` reference in the built site resolves; CI runs it on every push, and `--live <url>` checks a deployed site.
 | `data/derived/<slug>.json` | real pixel sizes and byte counts, read by the download table |
 | `static/qr/<name>.svg` | QR codes for the configured donation addresses |
 

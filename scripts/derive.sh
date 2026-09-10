@@ -80,8 +80,8 @@ for md in content/paintings/*.md; do
     fi
   fi
   ext=${orig##*.}
-  if stale "$dl/original.$ext" "$orig"; then
-    ln -f "$orig" "$dl/original.$ext" 2>/dev/null || cp "$orig" "$dl/original.$ext"
+  if stale "$dl/$slug-original.$ext" "$orig"; then
+    ln -f "$orig" "$dl/$slug-original.$ext" 2>/dev/null || cp "$orig" "$dl/$slug-original.$ext"
   fi
 
   # A painting is cut once around its focal point, or once per entry of
@@ -130,7 +130,7 @@ for md in content/paintings/*.md; do
         ow=$bw; oh=$bh; full=false
       fi
       upscale=$(awk -v a="$ow" -v b="$bw" 'BEGIN { s = a / b; if (s < 1) s = 1; printf "%.4f", s }')
-      name="$prefix${ow}x${oh}.jpg"
+      name="$slug-$prefix${ow}x${oh}.jpg"
       case " $seen " in *" $name "*) continue ;; esac
       seen="$seen $name"
       out="$dl/$name"
@@ -158,7 +158,7 @@ for md in content/paintings/*.md; do
 
   for f in "$dl"/*.jpg; do
     n=$(basename "$f")
-    case " original.$ext$seen " in *" $n "*) ;; *) rm -f "$f" ;; esac
+    case " $slug-original.$ext$seen " in *" $n "*) ;; *) rm -f "$f" ;; esac
   done
   slice_names=" $(fm '.slices[].name' "$md" 2>/dev/null | tr '\n' ' ')"
   for f in "$web"/*-preview.* "$web"/*-thumb.webp; do
@@ -168,8 +168,8 @@ for md in content/paintings/*.md; do
   done
 
   mkdir -p data/derived
-  printf '{"original":{"file":"original.%s","width":%s,"height":%s,"bytes":%s},"variants":[%s]}\n' \
-    "$ext" "$w" "$h" "$(bytes "$orig")" "${variants%,}" > "data/derived/$slug.json"
+  printf '{"original":{"file":"%s-original.%s","width":%s,"height":%s,"bytes":%s},"variants":[%s]}\n' \
+    "$slug" "$ext" "$w" "$h" "$(bytes "$orig")" "${variants%,}" > "data/derived/$slug.json"
 done
 
 for d in static/dl/* static/w/*; do
