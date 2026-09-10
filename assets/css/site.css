@@ -83,3 +83,7 @@ nav a:hover { color: var(--fg); }
 .slice { margin: 0 0 2.5rem; max-width: 720px; }
 .slice h3 { font-size: 1rem; margin: 0 0 0.6rem; font-weight: 600; }
 .slice-preview img { width: 100%; border-radius: 4px; background: var(--panel); margin-bottom: 0.6rem; }
+
+.gallery .slice-name { color: var(--muted); }
+.gallery .slice-name::before { content: "\00b7 "; }
+.slice { scroll-margin-top: 1rem; }

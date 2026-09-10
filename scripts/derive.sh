@@ -91,11 +91,12 @@ for md in content/paintings/*.md; do
       set -- $box; bx=$1; by=$2; bw=$3; bh=$4
       if [ -n "$slice" ] && [ "$aspect" = "16:9" ] && [ -z "$preview_done" ] && [ -z "${DERIVE_CUTS_ONLY:-}" ]; then
         preview_done=1
-        if stale "$web/${prefix}preview.webp" "$orig" "$md"; then
+        if stale "$web/${prefix}preview.webp" "$orig" "$md" || stale "$web/${prefix}thumb.webp" "$orig" "$md"; then
           tmp=$(mktemp -u).v
           vips extract_area "$orig" "$tmp" "$bx" "$by" "$bw" "$bh"
           vips thumbnail "$tmp" "$web/${prefix}preview.webp[Q=84,strip]" 1600
           vips thumbnail "$tmp" "$web/${prefix}preview.jpg[Q=86,strip]" 1600
+          vips thumbnail "$tmp" "$web/${prefix}thumb.webp[Q=82,strip]" 480
           rm -f "$tmp"
         fi
       fi
@@ -131,9 +132,9 @@ for md in content/paintings/*.md; do
     case " original.$ext$seen " in *" $n "*) ;; *) rm -f "$f" ;; esac
   done
   slice_names=" $(fm '.slices[].name' "$md" 2>/dev/null | tr '\n' ' ')"
-  for f in "$web"/*-preview.*; do
+  for f in "$web"/*-preview.* "$web"/*-thumb.webp; do
     [ -e "$f" ] || continue
-    n=$(basename "$f"); n=${n%-preview.*}
+    n=$(basename "$f"); n=${n%-preview.*}; n=${n%-thumb.webp}
     case "$slice_names" in *" $n "*) ;; *) rm -f "$f" ;; esac
   done
 
