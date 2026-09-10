@@ -1,7 +1,7 @@
 ---
 title: Die Toteninsel
 artist: Alexander Kircher
-year: c. 1900
+year: ""
 medium: oil on canvas
 institution: ""
 source: ""

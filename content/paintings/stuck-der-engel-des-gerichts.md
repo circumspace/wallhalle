@@ -1,7 +1,7 @@
 ---
 title: "Der Engel des Gerichts"
 artist: "Franz von Stuck"
-year: ""
+year: "c. 1922"
 medium: "oil on canvas"
 institution: ""
 source: "https://commons.wikimedia.org/wiki/File:Franz_von_Stuck_Der_Engel_des_Gerichts.jpg"

@@ -1,7 +1,7 @@
 ---
 title: "Whitby Harbor"
 artist: "John Atkinson Grimshaw"
-year: ""
+year: "1874"
 medium: "oil on canvas"
 institution: "Yale Center for British Art"
 source: "https://commons.wikimedia.org/wiki/File:John_Atkinson_Grimshaw_-_Whitby_Harbor_-_B2015.13_-_Yale_Center_for_British_Art.jpg"

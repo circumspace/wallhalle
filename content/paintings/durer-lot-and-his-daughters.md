@@ -1,7 +1,7 @@
 ---
 title: "Lot and His Daughters"
 artist: "Albrecht Dürer"
-year: "c. 1496"
+year: "c. 1496 to 1499"
 medium: "oil on panel"
 institution: "National Gallery of Art, Washington"
 source: "https://commons.wikimedia.org/wiki/File:Albrecht_Dürer_-_Lot_und_seine_Töchter_(NGA).jpg"

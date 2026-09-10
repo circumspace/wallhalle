@@ -98,7 +98,7 @@ Addresses live in `config/_default/hugo.toml` under `[params.donate]`. They are 
 ## Open items
 
 - The Kircher painting (`alexander-kircher-toteninsel`) has no recorded source or institution; the file arrived without provenance. It is the one original committed to the repo, under `bundled/`, so `fetch.sh` can place it without a URL. Keep that directory to such exceptions.
-- Institution, year and medium for the pulled paintings were filled from memory and file names. Pages with an empty `year` or `institution` need a lookup; every entry deserves a check against the museum page before the site goes public.
+- Metadata was checked against Wikidata and the Commons artwork records on 2026-09-11 (artist, title, date, medium, collection). Still unknown: the Kircher painting's date, source and institution; the holders of Church's The Meteor of 1860 and Stuck's Der Engel des Gerichts (both private).
 - Two Commons titles use a typographic apostrophe (U+2019), not ASCII. `source` must match the Commons title byte for byte or `scripts/fetch.sh` finds nothing.
 - `scripts/fetch.sh` stalls when run through the podman VM (Wikimedia throttles that path); run the download loop on the host, then derive in the container.
 - No impressum page yet; add `content/impressum.md` and a nav link in `layouts/_default/baseof.html`. The site is public without one.

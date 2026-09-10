@@ -1,8 +1,8 @@
 ---
 title: "Duinen (Dunes)"
 artist: "Léon Spilliaert"
-year: ""
-medium: "ink and gouache on paper"
+year: "1926"
+medium: "watercolour and gouache on paper"
 institution: "Mu.ZEE, Ostend"
 source: "https://commons.wikimedia.org/wiki/File:Duinen,_Léon_Spilliaert,_Mu.ZEE_Oostende,_SM000645.jpg"
 license: PD

@@ -79,7 +79,7 @@ Sizes are the Commons file, width x height. "6K" marks files that clear 6084x342
 
 ### Symbolism, Kircher's kin
 
-- Arnold Böcklin: The Isle of the Dead 1883 8256x5504 (Berlin version, check uploader, 6K). Die Toteninsel I 6784x4837 (Kunstmuseum Basel, 6K). Sacred Grove 6884x4800 (Basel, 6K). Spring Evening 6030x3091 (GAP). Odysseus und Polyphemus 7200x3151 (6K wide, height limits it to 5K). Battle of the Centaurs 6746x3596 (Basel, 6K). Play of the Nereides 6106x5213 (6K). The Met's 1880 version is CC0 but the Met serves around 4000 px.
+- Arnold Böcklin: the Commons file "The Isle of the Dead - 1883 8901" (8256x5504) is a visitor's close-up of the boat, not the painting; it was in the catalogue for a day and is out. Die Toteninsel I 6784x4837 (Kunstmuseum Basel, 6K). Sacred Grove 6884x4800 (Basel, 6K). Spring Evening 6030x3091 (GAP). Odysseus und Polyphemus 7200x3151 (6K wide, height limits it to 5K). Battle of the Centaurs 6746x3596 (Basel, 6K). Play of the Nereides 6106x5213 (6K). The Met's 1880 version is CC0 but the Met serves around 4000 px.
 - Franz von Stuck: Der Engel des Gerichts 7158x6485 (6K). Susanna im Bade 5972x4463. Luzifer is 4700 wide, 4K only.
 - Fernand Khnopff: Caresses 8859x2883 (GAP, 5K only because of the height). Hypnos 5240x3493 (Petit Palais photo, check licence). Medusa 5056x3371 misses 5K by 13 px beyond the tolerance.
 - Léon Spilliaert (died 1946, public domain since 2017): Strand met maan 9375x7227 (6K). De vuurtoren 10702x7706 (6K). Marine 7153x5280 (6K). Duinen 7553x5341 (6K). Marine met kielzog 7341x5625 (6K). MSK Gent uploads, ink and gouache on paper.

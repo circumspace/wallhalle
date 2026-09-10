@@ -1,5 +1,5 @@
 ---
-title: "Der Weiher im Walde (Pond in the Woods)"
+title: "Landscape with a Woodland Pool (Der Weiher im Walde)"
 artist: "Albrecht Dürer"
 year: "c. 1497"
 medium: "watercolour and gouache on paper"

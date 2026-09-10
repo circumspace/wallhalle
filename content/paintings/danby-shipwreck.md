@@ -1,7 +1,7 @@
 ---
 title: "Shipwreck"
 artist: "Francis Danby"
-year: ""
+year: "c. 1850"
 medium: "oil on canvas"
 institution: "Yale Center for British Art"
 source: "https://commons.wikimedia.org/wiki/File:Francis_Danby_-_Shipwreck_-_Google_Art_Project.jpg"
