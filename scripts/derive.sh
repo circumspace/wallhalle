@@ -60,45 +60,70 @@ for md in content/paintings/*.md; do
     ln -f "$orig" "$dl/original.$ext" 2>/dev/null || cp "$orig" "$dl/original.$ext"
   fi
 
-  fx=$(fm '.focal[0] // 0.5' "$md"); fy=$(fm '.focal[1] // 0.5' "$md")
+  # A painting is cut once around its focal point, or once per entry of
+  # `slices` for tall paintings that only work as several wide cuts. Each
+  # slice names its files and gets its own 16:9 preview for the page.
+  nslices=$(fm '.slices | length' "$md")
   variants=""
   seen=""
-  for spec in $VARIANTS; do
-    aspect=${spec%%,*}; rest=${spec#*,}; tw=${rest%%,*}; rest=${rest#*,}; th=${rest%,*}; class=${rest#*,}
-    key=$(echo "$aspect" | tr ':' 'x')
-    box=$(fm ".crops.\"$key\" // [] | join(\" \")" "$md")
-    if [ -z "$box" ]; then
-      box=$(awk -v W="$w" -v H="$h" -v a="$tw/$th" -v fx="$fx" -v fy="$fy" 'BEGIN {
-        split(a, r, "/"); ar = r[1] / r[2];
-        if (W / H > ar) { bh = H; bw = int(H * ar) } else { bw = W; bh = int(W / ar) }
-        x = int(fx * W - bw / 2 + 0.5); y = int(fy * H - bh / 2 + 0.5);
-        if (x < 0) x = 0; if (y < 0) y = 0;
-        if (x + bw > W) x = W - bw; if (y + bh > H) y = H - bh;
-        print x, y, bw, bh }')
-    fi
-    set -- $box; bx=$1; by=$2; bw=$3; bh=$4
-    if awk -v bw="$bw" -v tw="$tw" -v tol="$UPSCALE_TOLERANCE" 'BEGIN { exit !(bw >= tw * (1 - tol)) }'; then
-      ow=$tw; oh=$th; full=true
+  i=0
+  while [ "$i" -lt "${nslices:-0}" ] || [ "$i" -eq 0 ]; do
+    if [ "${nslices:-0}" -gt 0 ]; then
+      base=".slices[$i]"; slice=$(fm "$base.name" "$md"); prefix="$slice-"
     else
-      ow=$bw; oh=$bh; full=false
+      base=""; slice=""; prefix=""
     fi
-    upscale=$(awk -v a="$ow" -v b="$bw" 'BEGIN { s = a / b; if (s < 1) s = 1; printf "%.4f", s }')
-    name="${ow}x${oh}.jpg"
-    case " $seen " in *" $name "*) continue ;; esac
-    seen="$seen $name"
-    out="$dl/$name"
-    if stale "$out" "$orig" "$md"; then
-      echo "derive: $slug $aspect -> $name (box $bx,$by ${bw}x${bh})"
-      tmp=$(mktemp -u).v
-      vips extract_area "$orig" "$tmp" "$bx" "$by" "$bw" "$bh"
-      if [ "$ow" -eq "$bw" ] && [ "$oh" -eq "$bh" ]; then
-        vips copy "$tmp" "$out[Q=92,strip]"
-      else
-        vips resize "$tmp" "$out[Q=92,strip]" "$(awk -v a="$ow" -v b="$bw" 'BEGIN{print a/b}')" --vscale "$(awk -v a="$oh" -v b="$bh" 'BEGIN{print a/b}')"
+    fx=$(fm "$base.focal[0] // 0.5" "$md"); fy=$(fm "$base.focal[1] // 0.5" "$md")
+    preview_done=""
+    for spec in $VARIANTS; do
+      aspect=${spec%%,*}; rest=${spec#*,}; tw=${rest%%,*}; rest=${rest#*,}; th=${rest%,*}; class=${rest#*,}
+      key=$(echo "$aspect" | tr ':' 'x')
+      box=$(fm "$base.crops.\"$key\" // [] | join(\" \")" "$md")
+      if [ -z "$box" ]; then
+        box=$(awk -v W="$w" -v H="$h" -v a="$tw/$th" -v fx="$fx" -v fy="$fy" 'BEGIN {
+          split(a, r, "/"); ar = r[1] / r[2];
+          if (W / H > ar) { bh = H; bw = int(H * ar) } else { bw = W; bh = int(W / ar) }
+          x = int(fx * W - bw / 2 + 0.5); y = int(fy * H - bh / 2 + 0.5);
+          if (x < 0) x = 0; if (y < 0) y = 0;
+          if (x + bw > W) x = W - bw; if (y + bh > H) y = H - bh;
+          print x, y, bw, bh }')
       fi
-      rm -f "$tmp"
-    fi
-    variants="$variants{\"aspect\":\"$aspect\",\"class\":\"$class\",\"full\":$full,\"upscale\":$upscale,\"file\":\"$name\",\"width\":$(dim "$out" width),\"height\":$(dim "$out" height),\"bytes\":$(bytes "$out")},"
+      set -- $box; bx=$1; by=$2; bw=$3; bh=$4
+      if [ -n "$slice" ] && [ "$aspect" = "16:9" ] && [ -z "$preview_done" ] && [ -z "${DERIVE_CUTS_ONLY:-}" ]; then
+        preview_done=1
+        if stale "$web/${prefix}preview.webp" "$orig" "$md"; then
+          tmp=$(mktemp -u).v
+          vips extract_area "$orig" "$tmp" "$bx" "$by" "$bw" "$bh"
+          vips thumbnail "$tmp" "$web/${prefix}preview.webp[Q=84,strip]" 1600
+          vips thumbnail "$tmp" "$web/${prefix}preview.jpg[Q=86,strip]" 1600
+          rm -f "$tmp"
+        fi
+      fi
+      if awk -v bw="$bw" -v tw="$tw" -v tol="$UPSCALE_TOLERANCE" 'BEGIN { exit !(bw >= tw * (1 - tol)) }'; then
+        ow=$tw; oh=$th; full=true
+      else
+        ow=$bw; oh=$bh; full=false
+      fi
+      upscale=$(awk -v a="$ow" -v b="$bw" 'BEGIN { s = a / b; if (s < 1) s = 1; printf "%.4f", s }')
+      name="$prefix${ow}x${oh}.jpg"
+      case " $seen " in *" $name "*) continue ;; esac
+      seen="$seen $name"
+      out="$dl/$name"
+      if stale "$out" "$orig" "$md"; then
+        echo "derive: $slug $slice $aspect -> $name (box $bx,$by ${bw}x${bh})"
+        tmp=$(mktemp -u).v
+        vips extract_area "$orig" "$tmp" "$bx" "$by" "$bw" "$bh"
+        if [ "$ow" -eq "$bw" ] && [ "$oh" -eq "$bh" ]; then
+          vips copy "$tmp" "$out[Q=92,strip]"
+        else
+          vips resize "$tmp" "$out[Q=92,strip]" "$(awk -v a="$ow" -v b="$bw" 'BEGIN{print a/b}')" --vscale "$(awk -v a="$oh" -v b="$bh" 'BEGIN{print a/b}')"
+        fi
+        rm -f "$tmp"
+      fi
+      variants="$variants{\"slice\":\"$slice\",\"aspect\":\"$aspect\",\"class\":\"$class\",\"full\":$full,\"upscale\":$upscale,\"file\":\"$name\",\"width\":$(dim "$out" width),\"height\":$(dim "$out" height),\"bytes\":$(bytes "$out")},"
+    done
+    i=$((i + 1))
+    [ "${nslices:-0}" -gt 0 ] || break
   done
 
   for f in "$dl"/*.jpg; do

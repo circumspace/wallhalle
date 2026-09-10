@@ -12,6 +12,36 @@
   {{ partial "notice.html" . }}
   <h2>Download</h2>
   {{ if $d }}
+  {{ if .Params.slices }}
+  <p class="note">A tall painting: it is offered as {{ len .Params.slices }} wide cuts, each around its own part of the scene, plus the untouched scan.</p>
+  {{ range .Params.slices }}
+  {{ $slice := . }}
+  <section class="slice">
+    <h3>{{ .title | default .name }}</h3>
+    <picture class="slice-preview">
+      <source srcset="{{ printf "/w/%s/%s-preview.webp" $slug .name | relURL }}" type="image/webp">
+      <img src="{{ printf "/w/%s/%s-preview.jpg" $slug .name | relURL }}" alt="{{ .title | default .name }}, cut from {{ $.Title }}" width="1600" loading="lazy">
+    </picture>
+    <table class="downloads">
+      <thead><tr><th>File</th><th>Resolution</th><th>Size</th></tr></thead>
+      <tbody>
+        {{ range where $d.variants "slice" $slice.name }}
+        {{ partial "cut-row.html" (dict "slug" $slug "cut" .) }}
+        {{ end }}
+      </tbody>
+    </table>
+  </section>
+  {{ end }}
+  <table class="downloads">
+    <tbody>
+      <tr>
+        <td><a href="{{ printf "/dl/%s/%s" $slug $d.original.file | relURL }}" download>Original scan</a></td>
+        <td>{{ $d.original.width }} x {{ $d.original.height }}</td>
+        <td>{{ partial "filesize.html" $d.original.bytes }}</td>
+      </tr>
+    </tbody>
+  </table>
+  {{ else }}
   <table class="downloads">
     <thead><tr><th>File</th><th>Resolution</th><th>Size</th></tr></thead>
     <tbody>
@@ -21,14 +51,11 @@
         <td>{{ partial "filesize.html" $d.original.bytes }}</td>
       </tr>
       {{ range $d.variants }}
-      <tr>
-        <td><a href="{{ printf "/dl/%s/%s" $slug .file | relURL }}" download>{{ .aspect }} cut</a>{{ if .full }} <span class="badge badge-{{ .class }}">{{ upper .class }}</span>{{ if gt .upscale 1.0 }} <span class="badge badge-short">upscaled {{ printf "%.1f%%" (mul (sub .upscale 1.0) 100) }}</span>{{ end }}{{ else }} <span class="badge badge-short">native size</span>{{ end }}</td>
-        <td>{{ .width }} x {{ .height }}</td>
-        <td>{{ partial "filesize.html" .bytes }}</td>
-      </tr>
+      {{ partial "cut-row.html" (dict "slug" $slug "cut" .) }}
       {{ end }}
     </tbody>
   </table>
+  {{ end }}
   <p class="note">The original is the museum file as published, bytes untouched. Cuts are cropped around a hand-set focal point. A scan that misses a tier by under one percent is upscaled that last step and marked so. Where the scan is too small for a tier, the cut is offered at the largest size the scan allows and marked native size.</p>
   {{ else }}
   <p class="note">Derived files missing. Run <code>scripts/derive.sh</code>.</p>

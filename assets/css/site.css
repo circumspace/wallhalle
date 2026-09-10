@@ -79,3 +79,7 @@ nav a:hover { color: var(--fg); }
 
 .notice { max-width: 720px; margin: 0 0 2rem; padding: 0.9rem 1.1rem; border-left: 3px solid var(--accent); background: var(--panel); border-radius: 0 6px 6px 0; color: var(--muted); font-size: 0.95rem; }
 .notice strong { color: var(--fg); display: block; margin-bottom: 0.2rem; }
+
+.slice { margin: 0 0 2.5rem; max-width: 720px; }
+.slice h3 { font-size: 1rem; margin: 0 0 0.6rem; font-weight: 600; }
+.slice-preview img { width: 100%; border-radius: 4px; background: var(--panel); margin-bottom: 0.6rem; }

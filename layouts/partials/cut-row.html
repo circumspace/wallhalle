@@ -1,0 +1,6 @@
+{{- $c := .cut -}}
+<tr>
+  <td><a href="{{ printf "/dl/%s/%s" .slug $c.file | relURL }}" download>{{ $c.aspect }} cut</a>{{ if $c.full }} <span class="badge badge-{{ $c.class }}">{{ upper $c.class }}</span>{{ if gt $c.upscale 1.0 }} <span class="badge badge-short">upscaled {{ printf "%.1f%%" (mul (sub $c.upscale 1.0) 100) }}</span>{{ end }}{{ else }} <span class="badge badge-short">native size</span>{{ end }}</td>
+  <td>{{ $c.width }} x {{ $c.height }}</td>
+  <td>{{ partial "filesize.html" $c.bytes }}</td>
+</tr>

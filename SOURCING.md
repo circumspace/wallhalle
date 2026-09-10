@@ -75,6 +75,8 @@ Sizes are the Commons file, width x height. "6K" marks files that clear 6084x342
 - Vilhelm Hammershøi: Landskab i månelys 5932x4656. Unge ege 8206x5837 (SMK, 6K). Artemis 13201x10077 (6K). Mostly interiors and portraits otherwise.
 - John Atkinson Grimshaw (moonlit streets and docks): A House in a Clearing 10275x6598 (Minneapolis, 6K). The Lady of Shalott 6224x4137 (GAP, 6K). Whitby Harbor 5608x3449 (Yale). Boar Lane, Leeds 5552x3635. Liverpool Docks at Night 5281x3474 (York, check uploader).
 
+- Mårten Eskil Winge: Thor's Fight with the Giants 3861x5713 (a 2003 Edda print scan on Commons; the Nationalmuseum file is 3062x4429). Portrait format, offered as two 4K slices.
+
 ### Symbolism, Kircher's kin
 
 - Arnold Böcklin: The Isle of the Dead 1883 8256x5504 (Berlin version, check uploader, 6K). Die Toteninsel I 6784x4837 (Kunstmuseum Basel, 6K). Sacred Grove 6884x4800 (Basel, 6K). Spring Evening 6030x3091 (GAP). Odysseus und Polyphemus 7200x3151 (6K wide, height limits it to 5K). Battle of the Centaurs 6746x3596 (Basel, 6K). Play of the Nereides 6106x5213 (6K). The Met's 1880 version is CC0 but the Met serves around 4000 px.

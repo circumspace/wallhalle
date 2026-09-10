@@ -41,6 +41,18 @@ Everything runs in a container built from `Containerfile.dev` (Alpine with hugo,
      16x9: [0, 400, 7119, 4004]   # x y width height
    ```
 
+   Tall paintings that only work as several wide cuts take a `slices` list instead of one focal point. Each slice names its files, has its own focal point (and optional `crops`), and gets its own preview on the page:
+
+   ```yaml
+   slices:
+     - name: thor
+       title: "Thor and Mjölnir"
+       focal: [0.5, 0.2]
+     - name: giants
+       title: "The giants"
+       focal: [0.5, 0.85]
+   ```
+
 4. Run `scripts/fetch.sh` (inside the dev container) if the file is not yet in `originals/`. It downloads from a `download:` URL when set, otherwise from the Wikimedia Commons file page in `source:`.
 5. Run `./dev.sh` and check the cuts on the painting page.
 
