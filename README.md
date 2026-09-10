@@ -17,6 +17,8 @@ Everything runs in a container built from `Containerfile.dev` (Alpine with hugo,
 
 ## Adding a painting
 
+Candidate scans can be dropped into `incoming/`, which is gitignored; check their size against the tier table below before giving them a content page.
+
 1. Put the source file in `originals/` under a slug name, e.g. `originals/artist-title.jpg`, or let `scripts/fetch.sh` download it from the `source` URL. The directory is not in git: originals live on your machine and on the cluster volume. Bytes are never modified.
 2. Create `content/paintings/artist-title.md`:
 
