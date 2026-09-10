@@ -20,7 +20,8 @@ for md in content/paintings/*.md; do
       https://commons.wikimedia.org/wiki/File:*) ;;
       *) echo "fetch: $md: no download field and source is not a Commons file page" >&2; fail=1; continue ;;
     esac
-    title=$(printf '%s' "${source#https://commons.wikimedia.org/wiki/File:}" | tr '_' ' ')
+    title=$(printf '%s' "${source#https://commons.wikimedia.org/wiki/File:}" | tr '_' ' ' | sed 's/%\([0-9A-Fa-f][0-9A-Fa-f]\)/\\x\1/g')
+    title=$(printf '%b' "$title")
     url=$(curl -sG -A "$UA" --retry 4 --retry-delay 5 --retry-all-errors https://commons.wikimedia.org/w/api.php \
       --data-urlencode "titles=File:$title" -d action=query -d prop=imageinfo -d iiprop=url -d format=json \
       | yq -p json -oy -r '.query.pages[].imageinfo[0].url // ""')
