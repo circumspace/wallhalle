@@ -92,6 +92,13 @@ Sizes are the Commons file, width x height. "6K" marks files that clear 6084x342
 - Albert Bierstadt: Sunrise, Yosemite Valley 12732x8815 (6K). View in the Yosemite Valley 10173x6596 (6K). Lake Lucerne 7104x4233 (GAP, NGA, 6K). Valley of the Yosemite 6301x3898 (GAP, 6K). A Storm in the Rocky Mountains, Mt. Rosalie 5736x3319. Alcatraz 6000x3991.
 - Thomas Moran: An Indian Paradise 9828x7433 (Dallas, 6K). Valley of the Catawissa in Autumn 7566x4705 (6K). Grand Canyon of the Colorado River 5665x3192 (GAP). The Chasm of the Colorado 8069x2989 is too short for 5K.
 
+### Outside the period, pulled for the mood
+
+- Albrecht Dürer: Der Weiher im Walde 4235x3000 (British Museum, GAP) and Trient von Norden gesehen 4557x3020 (Kunsthalle Bremen, GAP), both 4K after trimming the mount; Lot and His Daughters 7301x9191 (NGA, CC0) as two 6K slices. Feast of the Rose Garlands 4285x3625 and the Landauer Altar 4969x5434 remain as 4K options.
+- Jean Delville (public domain in the EU since 2024): La roue du monde 5142x6732 (KMSKA TIFF) as three 5K slices. Painted 1940, so its US status is unclear. L'École de Platon is 4123x1913, too short; the Royal Library of Belgium holds his drawings at 6K sizes.
+- Gustave Moreau: not yet. The one large file on Commons, "Saint Sebastian Succoured" 7297x9196, shows a seated woman while the Google Arts record it cites is a 27x33 cm landscape watercolour; the file is mislabeled and parked in `incoming/` until identified. His own museum publishes nothing open; Harvard's La chimère 4265x5139 and L'Apparition 4060x4845 are the remaining 4K-slice options.
+- Fidus (public domain since 2019): Lichtgebet 4682x6931 (Deutsches Historisches Museum) is the only clean scan; skipped for now.
+
 ## Dead ends at 5K
 
 - Alexander Kircher and Hermann Hendrich: nothing above 3300 px on Commons. Kircher's known works are in private hands and Austrian regional museums; the Belvedere collection search is the one lead.
