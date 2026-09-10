@@ -50,6 +50,18 @@ for md in content/paintings/*.md; do
   web="static/w/$slug"; dl="static/dl/$slug"
   mkdir -p "$web" "$dl"
 
+  # Outputs are rebuilt when the original changes or when the cut-relevant
+  # front matter changes. The latter is tracked as a signature file, not as
+  # the content page's mtime: pages inside the tools image get a fresh mtime
+  # on every build, which would re-cut everything on every cluster run.
+  sig=$(fm '{"original": .original, "focal": .focal, "trim": .trim, "crops": .crops, "slices": .slices}' "$md" | md5sum | cut -c1-32)
+  stamp="$dl/.sig"
+  if [ ! -e "$stamp" ]; then
+    printf '%s\n' "$sig" > "$stamp"; touch -r "$orig" "$stamp"
+  elif [ "$(cat "$stamp")" != "$sig" ]; then
+    printf '%s\n' "$sig" > "$stamp"
+  fi
+
   # `trim: [left, top, right, bottom]` in pixels shaves scan margins (book
   # edges, white borders) off the area cuts and previews are taken from.
   # The original file is never altered.
@@ -58,7 +70,7 @@ for md in content/paintings/*.md; do
   uw=$((w - tl - tr_)); uh=$((h - tt - tb))
 
   if [ -z "${DERIVE_CUTS_ONLY:-}" ]; then
-    if stale "$web/thumb.webp" "$orig" "$md" || stale "$web/preview.webp" "$orig" "$md"; then
+    if stale "$web/thumb.webp" "$orig" "$stamp" || stale "$web/preview.webp" "$orig" "$stamp"; then
       tmp=$(mktemp -u).v
       vips extract_area "$orig" "$tmp" "$tl" "$tt" "$uw" "$uh"
       vips thumbnail "$tmp" "$web/thumb.webp[Q=82,strip]" 480
@@ -103,7 +115,7 @@ for md in content/paintings/*.md; do
       set -- $box; bx=$1; by=$2; bw=$3; bh=$4
       if [ -n "$slice" ] && [ "$aspect" = "16:9" ] && [ -z "$preview_done" ] && [ -z "${DERIVE_CUTS_ONLY:-}" ]; then
         preview_done=1
-        if stale "$web/${prefix}preview.webp" "$orig" "$md" || stale "$web/${prefix}thumb.webp" "$orig" "$md"; then
+        if stale "$web/${prefix}preview.webp" "$orig" "$stamp" || stale "$web/${prefix}thumb.webp" "$orig" "$stamp"; then
           tmp=$(mktemp -u).v
           vips extract_area "$orig" "$tmp" "$bx" "$by" "$bw" "$bh"
           vips thumbnail "$tmp" "$web/${prefix}preview.webp[Q=84,strip]" 1600
@@ -122,14 +134,19 @@ for md in content/paintings/*.md; do
       case " $seen " in *" $name "*) continue ;; esac
       seen="$seen $name"
       out="$dl/$name"
-      if stale "$out" "$orig" "$md"; then
+      if stale "$out" "$orig" "$stamp"; then
         echo "derive: $slug $slice $aspect -> $name (box $bx,$by ${bw}x${bh})"
         tmp=$(mktemp -u).v
-        vips extract_area "$orig" "$tmp" "$bx" "$by" "$bw" "$bh"
-        if [ "$ow" -eq "$bw" ] && [ "$oh" -eq "$bh" ]; then
-          vips copy "$tmp" "$out[Q=92,strip]"
-        else
-          vips resize "$tmp" "$out[Q=92,strip]" "$(awk -v a="$ow" -v b="$bw" 'BEGIN{print a/b}')" --vscale "$(awk -v a="$oh" -v b="$bh" 'BEGIN{print a/b}')"
+        if ! cut_ok=$(
+          vips extract_area "$orig" "$tmp" "$bx" "$by" "$bw" "$bh" &&
+          if [ "$ow" -eq "$bw" ] && [ "$oh" -eq "$bh" ]; then
+            vips copy "$tmp" "$out[Q=92,strip]"
+          else
+            vips resize "$tmp" "$out[Q=92,strip]" "$(awk -v a="$ow" -v b="$bw" 'BEGIN{print a/b}')" --vscale "$(awk -v a="$oh" -v b="$bh" 'BEGIN{print a/b}')"
+          fi && echo ok
+        ); then
+          echo "derive: $slug $name: vips failed, cut skipped" >&2
+          rm -f "$tmp" "$out"; fail=1; continue
         fi
         rm -f "$tmp"
       fi
