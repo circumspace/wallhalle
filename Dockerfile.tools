@@ -13,5 +13,6 @@ WORKDIR /app
 COPY --chown=101:101 content/ content/
 COPY --chown=101:101 config/ config/
 COPY --chown=101:101 scripts/ scripts/
+COPY --chown=101:101 bundled/ bundled/
 USER 101
 ENTRYPOINT ["scripts/cluster-sync.sh"]

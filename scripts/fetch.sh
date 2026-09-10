@@ -1,8 +1,9 @@
 #!/bin/sh
-# Downloads missing originals. For every painting whose original is absent,
-# the `download` front matter field is fetched if set, otherwise `source` must
-# be a Wikimedia Commons file page and the file behind it is fetched through
-# the Commons API. Existing originals are never touched.
+# Provides missing originals. For every painting whose original is absent:
+# a copy under bundled/ wins (for the rare file with no fetchable source),
+# else the `download` front matter field is fetched if set, else `source`
+# must be a Wikimedia Commons file page and the file behind it is fetched
+# through the Commons API. Existing originals are never touched.
 set -eu
 cd "$(dirname "$0")/.."
 
@@ -13,6 +14,11 @@ fail=0
 for md in content/paintings/*.md; do
   orig="originals/$(fm .original "$md")"
   [ -s "$orig" ] && continue
+  if [ -s "bundled/$(basename "$orig")" ]; then
+    echo "fetch: $orig <- bundled/"
+    cp "bundled/$(basename "$orig")" "$orig"
+    continue
+  fi
   url=$(fm '.download // ""' "$md")
   if [ -z "$url" ]; then
     source=$(fm .source "$md")
