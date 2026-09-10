@@ -75,7 +75,7 @@ Sizes are the Commons file, width x height. "6K" marks files that clear 6084x342
 - Vilhelm Hammershøi: Landskab i månelys 5932x4656. Unge ege 8206x5837 (SMK, 6K). Artemis 13201x10077 (6K). Mostly interiors and portraits otherwise.
 - John Atkinson Grimshaw (moonlit streets and docks): A House in a Clearing 10275x6598 (Minneapolis, 6K). The Lady of Shalott 6224x4137 (GAP, 6K). Whitby Harbor 5608x3449 (Yale). Boar Lane, Leeds 5552x3635. Liverpool Docks at Night 5281x3474 (York, check uploader).
 
-- Mårten Eskil Winge: Thor's Fight with the Giants 3861x5713 (a 2003 Edda print scan on Commons; the Nationalmuseum file is 3062x4429). Portrait format, offered as two 4K slices.
+- Mårten Eskil Winge: Thor's Fight with the Giants 3861x5713 (a 2003 Edda print scan on Commons; the Nationalmuseum file is 3062x4429). Portrait format, offered as two 4K slices. Hjalmar Parting from Orvar Odd 4094x3479 (Nationalmuseum TIFF via Commons, 4K). His other Norse pieces are too small on Commons: Kraka 3490 wide, Loke and Sigyn 2752, the Hammar-häntningen trilogy about 2880; the museum's own image host refuses direct downloads.
 
 ### Symbolism, Kircher's kin
 
