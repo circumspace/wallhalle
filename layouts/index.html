@@ -4,12 +4,21 @@
   <p>Museum scans of paintings, offered untouched at their full resolution, plus exact cuts for 16:9 and 16:10 screens. Free to download. <a href="{{ "/donate/" | relURL }}">Donations</a> keep it going.</p>
 </section>
 {{ partial "notice.html" . }}
-<nav class="filter" aria-label="Filter by display size">
+{{ $artists := slice }}
+{{ range site.RegularPages }}{{ with .Params.artist }}{{ $artists = $artists | append . }}{{ end }}{{ end }}
+{{ $artists = sort (uniq $artists) }}
+<nav class="filter filter-size" aria-label="Filter by display size">
   <span class="filter-label">Show wallpapers that fill</span>
   <button type="button" data-fit="" aria-pressed="true">All</button>
   <button type="button" data-fit="6k" aria-pressed="false">6K <small>6144 x 3456, 6016 x 3384</small></button>
   <button type="button" data-fit="5k" aria-pressed="false">5K <small>5120 x 2880, 5120 x 3200</small></button>
   <button type="button" data-fit="4k" aria-pressed="false">4K <small>3840 x 2160</small></button>
+  <button type="button" data-fit="new" aria-pressed="false">NEW <small>recent additions</small></button>
+</nav>
+<nav class="filter filter-artist" aria-label="Filter by painter">
+  <span class="filter-label">Show paintings by</span>
+  <button type="button" data-artist="" aria-pressed="true">All</button>
+  {{ range $artists }}<button type="button" data-artist="{{ . }}" aria-pressed="false">{{ . }}</button>{{ end }}
 </nav>
 <ul class="gallery">
   {{ range sort (where site.RegularPages "Section" "paintings") "Params.artist" }}
@@ -21,46 +30,60 @@
   {{ range $i, $s := .Params.slices }}
   {{ $fits := slice }}
   {{ range where $d.variants "slice" .name }}{{ if and .full (not (in $fits .class)) }}{{ $fits = $fits | append .class }}{{ end }}{{ end }}
-  <li data-fit="{{ delimit $fits " " }}">
+  <li data-fit="{{ delimit $fits " " }}{{ if $page.Params.new }} new{{ end }}" data-artist="{{ $page.Params.artist }}">
     <a href="{{ $page.RelPermalink }}#{{ .name }}">
       <img src="{{ printf "/w/%s/%s-thumb.webp" $slug .name | relURL }}" alt="{{ .title | default .name }}, cut from {{ $page.Title }} by {{ $page.Params.artist }}" loading="lazy" width="480">
       <span class="caption"><strong>{{ $page.Title }}</strong> <span class="slice-name">{{ .title | default .name }}</span><br>{{ $page.Params.artist }}{{ with $page.Params.year }}, {{ . }}{{ end }}</span>
-      <span class="badges"><span class="badge badge-slice" title="One of {{ $n }} wide cuts from a tall painting">slice {{ add $i 1 }} of {{ $n }}</span>{{ range $fits }}<span class="badge badge-{{ . }}">{{ upper . }}</span>{{ end }}</span>
+      <span class="badges">{{ if $page.Params.new }}<span class="badge badge-new">NEW</span>{{ end }}<span class="badge badge-slice" title="One of {{ $n }} wide cuts from a tall painting">slice {{ add $i 1 }} of {{ $n }}</span>{{ range $fits }}<span class="badge badge-{{ . }}">{{ upper . }}</span>{{ end }}</span>
     </a>
   </li>
   {{ end }}
   {{ else }}
   {{ $fits := slice }}
   {{ range $d.variants }}{{ if and .full (not (in $fits .class)) }}{{ $fits = $fits | append .class }}{{ end }}{{ end }}
-  <li data-fit="{{ delimit $fits " " }}">
+  <li data-fit="{{ delimit $fits " " }}{{ if .Params.new }} new{{ end }}" data-artist="{{ .Params.artist }}">
     <a href="{{ .RelPermalink }}">
       <img src="{{ printf "/w/%s/thumb.webp" $slug | relURL }}" alt="{{ .Title }} by {{ .Params.artist }}" loading="lazy" width="480">
       <span class="caption"><strong>{{ .Title }}</strong><br>{{ .Params.artist }}{{ with .Params.year }}, {{ . }}{{ end }}</span>
-      <span class="badges">{{ range $fits }}<span class="badge badge-{{ . }}">{{ upper . }}</span>{{ end }}</span>
+      <span class="badges">{{ if .Params.new }}<span class="badge badge-new">NEW</span>{{ end }}{{ range $fits }}<span class="badge badge-{{ . }}">{{ upper . }}</span>{{ end }}</span>
     </a>
   </li>
   {{ end }}
   {{ end }}
 </ul>
-<p class="filter-empty" hidden>No painting in the collection fills that size yet.</p>
+<p class="filter-empty" hidden>No painting matches that filter.</p>
 <script>
 (function () {
-  var buttons = document.querySelectorAll('.filter button');
+  var fit = '';
+  var artist = '';
+  var sizeButtons = document.querySelectorAll('.filter-size button');
+  var artistButtons = document.querySelectorAll('.filter-artist button');
   var items = document.querySelectorAll('.gallery li');
   var empty = document.querySelector('.filter-empty');
-  function apply(fit) {
+  function apply() {
     var shown = 0;
     items.forEach(function (li) {
-      var ok = !fit || (' ' + li.dataset.fit + ' ').indexOf(' ' + fit + ' ') !== -1;
+      var okFit = !fit || (' ' + li.dataset.fit + ' ').indexOf(' ' + fit + ' ') !== -1;
+      var okArtist = !artist || li.dataset.artist === artist;
+      var ok = okFit && okArtist;
       li.hidden = !ok;
       if (ok) shown++;
     });
-    buttons.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.fit === fit)); });
+    sizeButtons.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.fit === fit)); });
+    artistButtons.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.artist === artist)); });
     empty.hidden = shown > 0;
-    if (fit) history.replaceState(null, '', '#' + fit); else history.replaceState(null, '', location.pathname);
+    var hash = (fit || artist) ? '#' + fit + (artist ? '@' + encodeURIComponent(artist) : '') : location.pathname;
+    history.replaceState(null, '', hash);
   }
-  buttons.forEach(function (b) { b.addEventListener('click', function () { apply(b.dataset.fit); }); });
-  function fromHash() { apply(location.hash.slice(1)); }
+  function set(f, a) { fit = f; artist = a; apply(); }
+  sizeButtons.forEach(function (b) { b.addEventListener('click', function () { set(b.dataset.fit, artist); }); });
+  artistButtons.forEach(function (b) { b.addEventListener('click', function () { set(fit, b.dataset.artist); }); });
+  function fromHash() {
+    var parts = location.hash.slice(1).split('@');
+    fit = parts[0] || '';
+    artist = parts[1] ? decodeURIComponent(parts[1]) : '';
+    apply();
+  }
   window.addEventListener('hashchange', fromHash);
   if (location.hash) fromHash();
 })();

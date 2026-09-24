@@ -8,4 +8,5 @@ source: "https://commons.wikimedia.org/wiki/File:Cropsey,_Jasper_Francis_-_Summe
 license: PD
 original: cropsey-summer-lake-ontario.jpg
 focal: [0.5, 0.45]
+new: true
 ---

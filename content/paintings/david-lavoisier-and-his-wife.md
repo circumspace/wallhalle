@@ -8,4 +8,5 @@ source: "https://commons.wikimedia.org/wiki/File:Antoine_Laurent_Lavoisier_(1743
 license: PD
 original: david-lavoisier-and-his-wife.jpg
 focal: [0.5, 0.45]
+new: true
 ---

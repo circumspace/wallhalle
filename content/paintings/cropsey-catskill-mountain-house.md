@@ -8,4 +8,5 @@ source: "https://commons.wikimedia.org/wiki/File:Jasper_Francis_Cropsey_-_Catski
 license: PD
 original: cropsey-catskill-mountain-house.jpg
 focal: [0.5, 0.45]
+new: true
 ---

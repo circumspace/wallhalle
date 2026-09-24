@@ -8,4 +8,5 @@ source: "https://commons.wikimedia.org/wiki/File:George_Stubbs_-_A_Lion_Attackin
 license: PD
 original: stubbs-a-lion-attacking-a-horse.jpg
 focal: [0.5, 0.5]
+new: true
 ---

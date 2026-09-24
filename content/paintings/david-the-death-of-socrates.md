@@ -8,4 +8,5 @@ source: "https://commons.wikimedia.org/wiki/File:Jacques-Louis_David_-_The_Death
 license: PD
 original: david-the-death-of-socrates.jpg
 focal: [0.5, 0.48]
+new: true
 ---
