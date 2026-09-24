@@ -139,3 +139,185 @@ Sizes are the Commons file, width x height. "6K" marks files that clear 6084x342
 - Thomas Hill: his two 6K-capable files on Commons are photos of the paintings under CC BY-SA, rejected — Great Canyon of the Sierra 7619x4484 (Crocker) and Mount Tallac from Lake Tahoe 7554x4810 (de Young/FAMSF). The one open 6K option is the Prang chromolithograph after his Yosemite Valley, 7902x4838 (LOC, PD) — a print-after like the Wellcome mezzotints.
 - Piotr Michałowski: the two 4K-capable files, Ekwipaż przed pałacem Wielopolskich 4608x3456 and the Bolesław Chrobry entry 4290x3018, are CC BY-SA visitor uploads.
 - George Cattermole: nothing by his hand at 4K or above on Commons; the size-filtered hits are the footballer Lee Cattermole, buildings, and book PDFs.
+
+## Candidate painters, 1750-1910
+
+Work through against the gates (crop box >= 3802x2139, license PD/CC0/CC-BY-4.0, museum-grade scan). Marks: ✓ already on the site; ↯ already researched in the leads or dead ends above; (nc) the obvious source is a known-closed license wall (SMB/Berlin, Hamburg, Städel, Tate, Louvre/RMN, Tretyakov) — hunt for open copies elsewhere before giving up. Check any source against the Institutions table at the top.
+
+### Northern landscape and romance (Scandinavia, Denmark, Germany)
+- Carl Gustav Carus 1789-1869, Dresden moonlight landscapes; Dresden sources open?
+- Ernst Ferdinand Oehme 1797-1855, Saxon moonlit valleys; Leipzig/Albertinum, check
+- Thomas Fearnley 1802-1842, Norway/Italy; Nasjonalmuseet open
+- Hans Gude 1825-1903, Norwegian highland; Nasjonalmuseet open
+- Adolph Tidemand 1814-1876, Norwegian genre-landscape; Nasjonalmuseet open
+- Carl Friedrich Lessing 1808-1880 ↯ (Alte Nationalgalerie photo lead)
+- Carl Rottmann 1797-1850, Greek views; Pinakothek is (nc) BY-SA
+- Ernst Fries 1801-1833, Italian views; Karlsruhe, check
+- Johann Wilhelm Schirmer 1807-1863, Düsseldorf landscapes
+- Andreas Achenbach 1815-1910, romantic seascapes (PD in EU since 1980)
+- Oswald Achenbach 1827-1905, Italian seascapes
+- Louis Gurlitt 1812-1897, Danish-German landscape
+- Eduard Hildebrandt 1818-1869, world-travel lightscapes
+- Eduard Schleich the Elder 1812-1874, moody Bavarian plains
+- Karl Blechen 1798-1840 (nc via SMB; hunt Copacabana outside Berlin)
+- Friedrich Gauermann 1807-1862, alpine pasture scenes
+- Thomas Ender 1793-1875, alpine/travel views
+- Peter Christian Skovgaard 1817-1875, Danish beech woods; SMK CC0
+- Christen Købke 1810-1848, Copenhagen light; SMK CC0
+- Dankvart Dreyer 1816-1852, Jutland heath; SMK, check
+- Johan Thomas Lundbye 1818-1848, Danish landscapes; SMK
+- L. A. Ring 1854-1933, Danish moody landscapes (PD since 2003); SMK
+- Carl Fredrik Hill 1849-1911, Swedish romantic landscape (PD)
+- Ernst Josephson 1851-1906, portrait/landscape (PD); Nationalmuseum
+- Eugène Jansson 1862-1915, Stockholm nocturnes (PD); Nationalmuseum
+- Gustav Fjaestad 1868-1948, winter woodlands (PD since 2018)
+- Anna Boberg 1864-1935, Lofoten nocturnes (PD since 2005)
+- Prince Eugen 1865-1947, soft Swedish landscapes (PD since 2017)
+- Richard Bergh 1858-1919, portrait/landscape (PD)
+- Anders Zorn 1860-1920, portraits, water/nude (PD); Zornmuseet open?
+- Frits Thaulow 1847-1906, Norwegian rivers in snow (PD); Nasjonalmuseet
+- Harriet Backer 1845-1932, interiors/landscape (PD since 2002); Nasjonalmuseet
+- Kitty Kielland 1843-1914, marsh moors (PD); Nasjonalmuseet
+- Eilif Peterssen 1852-1928, nocturnes (PD); Nasjonalmuseet
+- Gunnar Berg 1863-1893, Lofoten (PD)
+
+### Hudson River, American 19th century and American impression
+- Sanford R. Gifford 1823-1880, luminous Hudson views
+- John F. Kensett 1816-1872, Long Island light
+- Worthington Whittredge 1820-1910 (PD; pre-1930 US)
+- Martin Johnson Heade 1819-1904, marsh/hummingbird
+- George Inness 1825-1894, tonalist
+- Alexander H. Wyant 1836-1892, tonalist
+- Homer Dodge Martin 1836-1897
+- Ralph Albert Blakelock 1847-1919, moonlight (PD)
+- Albert Pinkham Ryder 1847-1917, moonlit sea (PD since 1987)
+- Elihu Vedder 1836-1923, symbolist landscapes (PD)
+- Jasper Francis Cropsey 1823-1900 ✓
+- Childe Hassam 1859-1935, Boston/Isles of Shoals (PD since 2005)
+- John Henry Twachtman 1853-1902, snowscapes
+- J. Alden Weir 1852-1919
+- Willard Leroy Metcalf 1858-1925 (PD since 1995)
+- William Merritt Chase 1849-1916, portraits/landscapes (PD since 1986); many CC0 museums
+- John Singer Sargent 1856-1925, portraits (PD since 1995); Met/NGA CC0
+- Thomas Wilmer Dewing 1851-1938, figure/landscape (PD since 2008)
+- Abbott Handerson Thayer 1849-1921, angels (PD since 1991)
+- Cecilia Beaux 1855-1942, portraits (PD since 2012; pre-1930 US)
+- Frank W. Benson 1862-1951 (PD since 2021; pre-1930 US)
+
+### Barbizon, French and Franco-Dutch landscape
+- Jean-Baptiste-Camille Corot 1796-1875; huge PD pool (GAP, Met)
+- Théodore Rousseau 1812-1867
+- Charles-François Daubigny 1817-1878
+- Narcisse Diaz de la Peña 1807-1876
+- Jules Dupré 1811-1889
+- Constant Troyon 1810-1865
+- Henri Harpignies 1819-1916 (PD since 1986)
+- Eugène Boudin 1824-1898, beach skies
+- Johan Barthold Jongkind 1819-1891, Dutch coastline
+- Stanislas Lépine 1835-1892, Paris Seine views
+- Léon Lhermitte 1844-1925, rural scenes (PD since 1995)
+- Alexandre Calame 1810-1864, Swiss alps (PD); GAP pools
+- Gustave Courbet 1819-1877, landscape (PD); GAP pools
+
+### British landscape, architecture and marine
+- Richard Parkes Bonington 1802-1828, coast/architecture
+- David Roberts 1796-1864, Egypt architecture (GAP/Met)
+- Samuel Prout 1783-1852, street architecture
+- Thomas Shotter Boys 1803-1874, Paris/London views
+- William Callow 1812-1908, architectural views
+- Clarkson Stanfield 1793-1867, marine
+- Edward William Cooke 1811-1880, marine/architecture (Yale GAP)
+- David Cox 1783-1859, Welsh landscape
+- Peter de Wint 1784-1849
+- Samuel Palmer 1805-1881, visionary landscape (PD)
+- John Linnell 1792-1882
+- William Dyce 1806-1864, Pre-Raphaelite landscape
+- John Brett 1831-1902, P-R landscape (Yale GAP)
+- Arthur Hughes 1832-1915 (PD since 1985)
+- Ford Madox Brown 1821-1893
+- John Ruskin 1819-1900, architectural studies; Lancaster open?
+
+### Portraits, British and French
+- Thomas Gainsborough 1727-1788, portraits and landscape; NGA/Cleveland CC0
+- Joshua Reynolds 1723-1792 ✓
+- Henry Raeburn 1756-1823
+- Thomas Lawrence 1769-1830, GAP pools
+- George Romney 1734-1802
+- John Hoppner 1758-1810
+- William Beechey 1753-1839
+- John Opie 1761-1807
+- Henry Fuseli 1741-1825, gothic subjects
+- Élisabeth Vigée Le Brun 1755-1842; Met/GAP copies
+- Joseph Ducreux 1735-1802, portrait originals
+- Louis-Léopold Boilly 1761-1845, Paris street life
+- Marie-Guillemine Benoist 1768-1826
+- François Gérard 1770-1837, GAP pools
+- Antoine-Jean Gros 1771-1835
+- Jean-Auguste-Dominique Ingres 1780-1867; Met GAP
+- Ferdinand Georg Waldmüller 1793-1865, Biedermeier landscape/portrait; Belvedere CC0
+- Friedrich von Amerling 1803-1887; Belvedere CC0
+- Philipp Otto Runge 1777-1810 (nc via Hamburg; hunt elsewhere)
+
+### Italian vedute, ideal landscape and Macchiaioli
+- Canaletto 1697-1768 (works to 1750s)
+- Bernardo Bellotto 1722-1780, central-European vedute; DK museums open
+- Francesco Guardi 1712-1793, Venice vedute
+- Giovanni Paolo Panini 1691-1765, ruins/vedute; NGA CC0
+- Giovanni Battista Piranesi 1720-1778, architectural etchings
+- Hubert Robert 1733-1808, ruins capriccios
+- Jakob Philipp Hackert 1737-1807, Italian views
+- Joseph Anton Koch 1768-1839, heroic alpine; Belvedere CC0
+- Károly Markó the Elder 1791-1860, Italianate views
+- Ippolito Caffi 1809-1866, Venice light
+- Giacinto Gigante 1806-1876, Posillipo school
+- Filippo Palizzi 1818-1899
+- Giovanni Fattori 1825-1908, Macchiaioli landscape (PD since 1978)
+- Silvestro Lega 1826-1895
+- Telemaco Signorini 1835-1901
+
+### Symbolist and fin-de-siècle mood
+- Ferdinand Hodler 1853-1918, symbolist landscape/portrait (PD); Bern/Munich open?
+- Gustav Klimt 1862-1918, portraits/landscape (PD since 1988); Belvedere CC0
+- Odilon Redon 1840-1916, pastels (PD since 1986)
+- Eugène Carrière 1849-1906, portrait moods (PD since 1976)
+- Carlos Schwabe 1866-1926, symbolist (PD since 1996)
+- Jan Toorop 1858-1928, symbolist (PD since 1998)
+- Max Klinger 1857-1920 (PD since 1990), prints
+- Hans Thoma 1839-1924, German romantic landscape (PD since 1994)
+- Ferdinand Knab 1834-1902, Italian moonlight
+- Nikolai Roerich 1874-1947, Himalayas (PD since 2017); source hunt needed
+- Viktor Vasnetsov 1848-1926, epic landscape (PD since 1996)
+- Apollinary Vasnetsov 1856-1933, old Moscow views (PD since 2003)
+
+### Eastern Europe and Baltic
+- Ivan Shishkin 1832-1898, forests (nc via Tretyakov; hunt Commons)
+- Vasily Polenov 1844-1927 (PD since 1997); Tretyakov closed
+- Ilya Repin 1844-1930, portraits (PD since 2000); Helsinki Atheneum open?
+- Valentin Serov 1865-1911, portraits/landscape (PD since 1981)
+- Mikhail Nesterov 1862-1942 (PD since 2012)
+- Vasily Surikov 1848-1916 (PD since 1986)
+- Vasily Vereshchagin 1842-1904, oriental landscape
+- Juliusz Kossak 1824-1899, Polish horses (PD)
+- Józef Chełmoński 1849-1914, Polish countryside (PD since 1984)
+- Julian Fałat 1853-1929, winter (PD since 1999)
+- Stanisław Witkiewicz 1851-1915, Tatra (PD since 1985)
+- Leon Wyczółkowski 1852-1936 (PD since 2006)
+- Tivadar Csontváry Kosztka 1853-1919, visionary landscape (PD); Hungarian NG
+- Pál Szinyei Merse 1845-1920 (PD since 1990)
+- László Paál 1846-1879, Barbizon Hungarian
+- Nicolae Grigorescu 1838-1907, Romanian landscape (PD)
+- Ion Andreescu 1850-1882 (PD)
+- Ștefan Luchian 1868-1916 (PD since 1986)
+- Antonín Slavíček 1870-1910, Czech landscape (PD since 1980)
+- Julius Mařák 1832-1899, Czech forest/mood
+- Amandus Adamson 1855-1929, Baltic sea (PD since 1999)
+- Eugen Dücker 1841-1916, coastal (PD since 1986)
+
+### Finnish light (Finnish National Gallery publishes CC0 on its own site)
+- Akseli Gallen-Kallela 1865-1931 ↯ (Commons copies 5k; use kansallisgalleria.fi)
+- Albert Edelfelt 1854-1905 (PD)
+- Helene Schjerfbeck 1862-1946 (PD since 2016; pre-1930 US)
+- Eero Järnefelt 1863-1937 (PD since 2007)
+- Pekka Halonen 1865-1933 (PD since 2003)
+- Victor Westerholm 1860-1919, Åland (PD since 1989)
+- Alfred William Finch 1854-1930 (PD since 2000)
