@@ -1,7 +1,7 @@
 ---
 title: "The Finding of the Saviour in the Temple"
 artist: "William Holman Hunt"
-year: "1854-1860"
+year: "1860"
 medium: "oil on canvas"
 institution: "Birmingham Museums Trust"
 source: "https://commons.wikimedia.org/wiki/File:William_Holman_Hunt_-_The_Finding_of_the_Saviour_in_the_Temple_-_Google_Art_Project.jpg"
