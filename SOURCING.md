@@ -321,3 +321,88 @@ Work through against the gates (crop box >= 3802x2139, license PD/CC0/CC-BY-4.0,
 - Pekka Halonen 1865-1933 (PD since 2003)
 - Victor Westerholm 1860-1919, Åland (PD since 1989)
 - Alfred William Finch 1854-1930 (PD since 2000)
+
+## Sweep results, 2026-09
+
+Gate scan of the roster above (Commons API, tiers recomputed from file dimensions; license tags verified on the risky ones). Tags: (auction) auction-house scan, (shonagon) 2025 Louvre photographs — check first, (uk) National Gallery London/Tate/V&A — disputed-license flag like Turner, (agg) aggregator-mirror provenance — check first, (st) Städel-backed file — its site is BY-SA, verify the tag, (pd) painted ~post-1880 so check the file's own tag.
+
+### Northern — qualifying
+- Carus | 6K | Fantasy of the Alps (Nationalmuseum)
+- Fearnley | 6K | Grindewaldbreen (Nasjonalmuseet)
+- Gude | 6K | Frisk bris (Nasjonalmuseet); Tidemand & Gude | 6K | Bridal Procession on the Hardangerfjord (GAP/Nasjonalmuseet)
+- Schirmer | 6K | Geroldsauer Tal (Karlsruhe/GAP)
+- Andreas Achenbach | 6K | Ostende (KMSKA, CC0)
+- Oswald Achenbach | 6K | Abend an der Küste (auction)
+- Gurlitt | 6K | Møns Klint (SMK, CC0)
+- Hildebrandt | 6K | Paisagem com índios (São Paulo/GAP)
+- Schleich | 6K (check-first; Mike Peel museum photo) | Deer at Dawn (V&A painting, CC0)
+- Gauermann | 6K | Attersee (auction)
+- Ender | 6K | Castel Sant'Angelo (Cleveland, CC0)
+- Skovgaard | 5K | Møns Klint Jydeleje (SMK, CC0)
+- Købke | 6K | Capri sunrise (SMK, CC0)
+- Dreyer | 6K | Hammermøllen (SMK, CC0)
+- Lundbye | 6K | Refnæs beach (SMK, CC0)
+- L. A. Ring | 6K | Gadekæret i Ring (SMK, CC0)
+- Hill | 6K | Coast Landscape (Gothenburg, CC-BY-4.0)
+- Josephson | 5K | The Cool (Nationalmuseum)
+- Jansson | 6K | Evening in February (Gothenburg, CC-BY-4.0)
+- Fjaestad | 6K | Snow (Gothenburg, CC-BY-4.0)
+- Prince Eugen | 4K | Den hvide båd (SMK, CC0)
+- Bergh | 6K | Nordic Summer Evening (Gothenburg, CC-BY-4.0)
+- Zorn | 6K | Kapprodd (auction)
+- Thaulow | 6K | Parisian View (Nasjonalmuseet)
+- Backer | 5K | Blue Interior (GAP/Nasjonalmuseet)
+- Kielland | 6K | Jæren (Nasjonalmuseet)
+- Peterssen | 6K | Mountains near Innsbruck (GAP/Nasjonalmuseet)
+- Gunnar Berg | 5K (check-first; visitor photo) | From Svolvær
+
+### Northern — 4K only
+- Rottmann 4K (Cleveland, CC0) · Ernst Fries 4K (Cleveland, CC0) · Blechen 5K (Karlsruhe/GAP)
+
+### Northern — dead ends
+- Oehme, Boberg (nothing at 4K+)
+
+### Hudson/American — qualifying
+- Gifford | 6K | Wilderness (Toledo/GAP)
+- Kensett | 6K | Newport Beacon Rock (Dallas)
+- Whittredge | 5K | Foothills Colorado (Amon Carter/GAP)
+- Heade | 6K | Florida Sunrise (WHHA/GAP)
+- Inness | 6K | Summer Foliage (Dallas)
+- Wyant | 6K | Autumn in the Adirondacks (Mia)
+- H. D. Martin | 6K | Sand Dunes Lake Ontario (Cleveland, CC0)
+- Blakelock | 5K | Morning Light (Indianapolis)
+- Ryder | 6K | Siegfried and the Rhine Maidens (NGA)
+- Vedder | 6K (agg; check first) | The Pleiades
+- Hassam | 6K | Oyster Sloop, Cos Cob (NGA)
+- Twachtman | 6K | Boats in Harbor (Dallas)
+- Weir | 6K | Ravine near Branchville (Dallas)
+- Metcalf | 6K | Indian Summer Vermont (Dallas)
+- Chase | 6K | Gathering Autumn Flowers (NGA)
+- Sargent | 6K | Gypsy Encampment (Addison, confirmed PD)
+- Dewing | 6K | The Gossip (Mia)
+- Thayer | 5K | My Children (Brooklyn/GAP)
+- Benson | 5K | Summer day (GAP/private)
+
+### Hudson — dead ends
+- Cecilia Beaux (nothing at 4K+)
+
+### Barbizon — all qualify
+- Corot 5K (Musée d'Orsay/GAP) · Rousseau 6K (Frick/GAP) · Daubigny 6K (Mia, confirmed PD) · Diaz 6K (NGA) · Dupré 6K (NGA) · Troyon 6K (NGA) · Harpignies 6K (Petit Palais, CC0) · Boudin 6K (NGA) · Jongkind 6K (uk; NGL) · Lépine 6K (NGA, confirmed PD) · Lhermitte 6K (Petit Palais, CC0) · Calame 6K (NGA) · Courbet 6K (Rijksmuseum, confirmed PD)
+
+### British — qualifying
+- Bonington 6K (Kimbell/GAP) · David Roberts 6K (Cleveland, CC0) · Prout 6K (Yale) · Boys 6K (Carnavalet/GAP) · Callow 6K (Rijksmuseum) · Stanfield 5K oil / 6K print-after (GAP; Miller engraving) · E. W. Cooke 6K (RMG) · David Cox 6K (Birmingham/GAP) · de Wint 6K (uk; V&A/GAP) · Palmer 5K (uk; Tate/GAP; Cleveland etching CC0) · Linnell 6K (Tyne & Wear/GAP) · Dyce 6K (NGS) · Brett 6K (Indianapolis/GAP) · Hughes 5K (uk; Tate/GAP) · Ford Madox Brown 6K (Birmingham/GAP) · Ruskin 4K (Birmingham)
+
+### Portraits — qualifying
+- Gainsborough 6K (uk; NGL) · Raeburn 6K (NGA) · Lawrence 6K (Dallas, CC0) · Romney 6K (uk; Tate/GAP) · Hoppner 5K (RMG) · Beechey 4K (Detroit/GAP) · Opie 6K (Boydell) · Vigée Le Brun 6K (Versailles/rmn) · Ducreux 6K (shonagon) · Boilly 6K (shonagon) · Benoist 6K (shonagon) · Gérard 6K (Fontainebleau/GAP) · Gros 6K (Louvre) · Ingres 6K (Musée Condé/GAP) · Waldmüller 6K (auction) · Amerling 6K (auction)
+
+### Italian/symbolist — qualifying
+- Canaletto 6K (Dallas) · Bellotto 6K (auction) · Guardi 6K (Getty) · Panini 6K (Getty; figure studies) · Hubert Robert 6K (Karlsruhe) · Hackert 5K · Koch 5K (st; Städel file — verify tag) · Markó 6K (Cleveland, CC0) · Caffi 6K (auction) · Gigante 6K · Palizzi 6K (GAC) · Fattori 5K (private scan) · Lega 4K (Brera/Artsupp) · Signorini 5K · Hodler 6K (agg; check first) · Klimt 4K (Belvedere, CC0; deathbed subject) · Redon 6K (GAP) · Carrière 5K (Petit Palais, CC0) · Toorop 5K (MSK Gent) · Klinger 4K · Roerich 5K (auction) · V. Vasnetsov 4K (Tretyakov/GAP) · A. Vasnetsov 4K (Perm)
+
+### Italian/symbolist — rejected or dead
+- Thoma 6K file is Städel PDM-owner — not in the allowlist, rejected · Knab dead end · Schwabe 5K is an ex-libris bookplate (marginal)
+
+### Eastern/Baltic/Finnish — qualifying
+- Shishkin 4K (Tretyakov/GAP; pine morning 5K check-first) · Polenov 6K (Oka) · Repin 4K Barge Haulers / 5K Sadko (Russian Museum/GAP) · Serov 5K Ida Rubenstein, 6K-slice Meesaktid (Tartu) · Nesterov 5K (Solovki scan) · Surikov 6K (Russian Museum/GAP) · Vereshchagin 6K (LOC) · Kossak 4K (Zmeták) · Chełmoński 6K (MNK, confirmed PD) · Fałat 5K · Witkiewicz 4K (MNK) · Wyczółkowski 6K · Csontváry 5K (Hungarian NG) · Szinyei 6K (Hungarian NG/GAP) · Paál 5K (Hungarian NG) · Grigorescu 6K (MNAR) · Andreescu 6K (MNAR) · Luchian 4K (MNAR) · Slavíček 4K (Prague NG) · Mařák 4K · Dücker 6K (Estonian Art Museum) · Edelfelt 6K (Finnish NG) · Schjerfbeck 6K (Finnish NG) · Järnefelt/Halonen/Westerholm/Finch — no 4K+ hits reported; Finnish NG's own site remains the route
+
+### Eastern/Baltic — dead ends
+- Amandus Adamson (nothing at 4K+)
