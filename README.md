@@ -7,7 +7,7 @@ A static gallery of museum scans of paintings, offered as wallpapers for 5K and 
 Everything runs in a container built from `Containerfile.dev` (Alpine with hugo, vips, qrencode, yq). Nothing needs installing on the host beyond podman or docker.
 
 ```sh
-./dev.sh     # derive images, then hugo server on http://localhost:1313 with live reload
+./dev.sh     # derive images, then hugo server on http://localhost:6131 with live reload (PORT overrides; 1313 stays free for other hugo work)
 ./build.sh   # derive images, then hugo --minify into public/
 ```
 

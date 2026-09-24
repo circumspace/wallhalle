@@ -91,6 +91,9 @@ Sizes are the Commons file, width x height. "6K" marks files that clear 6084x342
 
 - Albert Bierstadt: Sunrise, Yosemite Valley 12732x8815 (6K). View in the Yosemite Valley 10173x6596 (6K). Lake Lucerne 7104x4233 (GAP, NGA, 6K). Valley of the Yosemite 6301x3898 (GAP, 6K). A Storm in the Rocky Mountains, Mt. Rosalie 5736x3319. Alcatraz 6000x3991.
 - Thomas Moran: An Indian Paradise 9828x7433 (Dallas, 6K). Valley of the Catawissa in Autumn 7566x4705 (6K). Grand Canyon of the Colorado River 5665x3192 (GAP). The Chasm of the Colorado 8069x2989 is too short for 5K.
+- Jasper Francis Cropsey: GAP scans, PD. Starrucca Viaduct, Pennsylvania 8024x4809 (6K, Toledo), Summer, Lake Ontario 6522x4062 (6K, Indianapolis), Catskill Mountain House 5751x3814 (5K, Minneapolis). The IMA/SAAM/Danforth/New Britain copies on Commons are visitor DSC photos. Cropsey House HABS sheets are architectural drawings.
+- Louis Rémy Mignot: only a 4K candidate, Travelers in a Tropical Landscape 4408x2636 (Crystal Bridges via a CC0 museum photo, 1861 oil, check first). The Brooklyn Museum IMG and Princeton DSC files are visitor photos; the LOC The Home of Washington 9254x6958 is a Barlow engraving after Rossiter and Mignot (6K, print-after only).
+- Alexander Lawrie Jr.: dead end — the single Commons file (5433x3262, "A Bucolic Rural Country Lane") is an auction lot photo of the framed painting, damage visible; nothing museum-grade open.
 
 ### British school: portraiture and the Pre-Raphaelites
 
