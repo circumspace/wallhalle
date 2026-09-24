@@ -15,11 +15,13 @@
   <button type="button" data-fit="4k" aria-pressed="false">4K <small>3840 x 2160</small></button>
   <button type="button" data-fit="new" aria-pressed="false">NEW <small>recent additions</small></button>
 </nav>
-<nav class="filter filter-artist" aria-label="Filter by painter">
-  <span class="filter-label">Show paintings by</span>
-  <button type="button" data-artist="" aria-pressed="true">All</button>
-  {{ range $artists }}<button type="button" data-artist="{{ . }}" aria-pressed="false">{{ . }}</button>{{ end }}
-</nav>
+<details class="filter-artist-box">
+  <summary class="filter-artist-toggle">Filter by painter ({{ len $artists }})</summary>
+  <nav class="filter filter-artist" aria-label="Filter by painter">
+    <button type="button" data-artist="" aria-pressed="true">All</button>
+    {{ range $artists }}<button type="button" data-artist="{{ . }}" aria-pressed="false">{{ . }}</button>{{ end }}
+  </nav>
+</details>
 <ul class="gallery">
   {{ range sort (where site.RegularPages "Section" "paintings") "Params.artist" }}
   {{ $slug := .File.ContentBaseName }}
@@ -82,6 +84,7 @@
     var parts = location.hash.slice(1).split('@');
     fit = parts[0] || '';
     artist = parts[1] ? decodeURIComponent(parts[1]) : '';
+    if (artist) { var box = document.querySelector('.filter-artist-box'); if (box) box.open = true; }
     apply();
   }
   window.addEventListener('hashchange', fromHash);
