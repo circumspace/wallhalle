@@ -14,13 +14,13 @@ podman build .               # the production site image, including the Hugo bui
 
 `hugo server` runs with `--poll` because file change notifications do not cross the podman volume mount on macOS; without it, edits to layouts are missed until a restart.
 
-`scripts/derive.sh` does the image work Hugo cannot do well at 5k+ sizes. It is incremental: an output is rebuilt only when its source file or the painting's content file is newer. The first run over the 8 sample paintings takes about a minute; later runs are seconds.
+`scripts/derive.sh` does the image work Hugo cannot do well at 5k+ sizes. It is incremental: a painting's outputs are rebuilt only when its original is newer or its cut-relevant front matter (`original`, `focal`, `trim`, `crops`, `slices`) changed, tracked in `static/dl/<slug>/.sig`. The first run over all paintings takes minutes; later runs take seconds.
 
 ## Adding a painting
 
 Candidate scans can be dropped into `incoming/`, which is gitignored; check their size against the tier table below before giving them a content page.
 
-1. Put the source file in `originals/` under a slug name, e.g. `originals/artist-title.jpg`, or let `scripts/fetch.sh` download it from the `source` URL. The directory is not in git: originals live on your machine and on the cluster volume. Bytes are never modified.
+1. Put the source file in `originals/` under a slug name, e.g. `originals/artist-title.jpg`, or leave it to `scripts/fetch.sh` in step 4. The directory is not in git: originals live on your machine and on the cluster volume. Bytes are never modified.
 2. Create `content/paintings/artist-title.md`:
 
    ```yaml
@@ -58,7 +58,7 @@ Candidate scans can be dropped into `incoming/`, which is gitignored; check thei
        focal: [0.5, 0.85]
    ```
 
-4. Run `./dev.sh scripts/fetch.sh` if the file is not yet in `originals/`. It downloads from a `download:` URL when set, otherwise from the Wikimedia Commons file page in `source:`.
+4. Run `./dev.sh scripts/fetch.sh` if the file is not yet in `originals/`. It downloads from a `download:` URL when set, otherwise from the Wikimedia Commons file page in `source:`. If it stalls (see Open items), run `scripts/fetch.sh` on the host instead; it needs only `curl` and `yq`.
 5. Run `./dev.sh` and check the cuts on the painting page.
 
 ## What derive.sh produces
@@ -105,11 +105,11 @@ Addresses live in `config/_default/hugo.toml` under `[params.donate]`. They are 
 - Two Commons titles use a typographic apostrophe (U+2019), not ASCII. `source` must match the Commons title byte for byte or `scripts/fetch.sh` finds nothing.
 - `scripts/fetch.sh` stalls when run through the podman VM (Wikimedia throttles that path); run the download loop on the host, then derive in the container.
 - No impressum page yet; add `content/impressum.md` and a nav link in `layouts/_default/baseof.html`. The site is public without one.
-- Size: 61 paintings are 1.1 GB of originals and 2.4 GB of cuts on the volume; the volume request is 10 Gi. The Pompeii original alone is 217 MB and the Cleveland TIFF 110 MB, both offered as-is under "Original scan".
+- Size, measured 2026-09-27: 87 paintings are 1.8 GB of originals, 2.0 GB of cuts and 55 MB of thumbnails and previews on the volume; the volume request is 10 Gi. The Pompeii original alone is 228 MB and the Cleveland TIFF 110 MB, both offered as-is under "Original scan".
 
 ## Deployment
 
-CI (`.github/workflows/image.yml`) builds two targets of the `Dockerfile` per commit on `main`, tagged `<epoch>-<sha>`, and pushes them to GHCR. Pull requests build both without pushing. Layers are cached in the GitHub Actions cache, so a content-only commit reruns just the Hugo build and the final copies.
+CI (`.github/workflows/image.yml`) builds two targets of the `Dockerfile` per commit on `main`, tagged `<epoch>-<sha>`, and pushes them to GHCR. Pull requests build both without pushing. Layers are cached in the GitHub Actions cache, so a content-only commit reruns only the Hugo build and the layers that copy the repo.
 
 | Image | Target | Content | Runs as |
 |---|---|---|---|
