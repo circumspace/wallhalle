@@ -1,8 +1,9 @@
 #!/bin/sh
 # Builds everything Hugo cannot: thumbnails, previews, fitted wallpaper cuts,
-# per-painting size data and donation QR codes. Runs before hugo in dev.sh
-# and build.sh, and inside the cluster job with DERIVE_CUTS_ONLY set, which
-# skips thumbnails, previews and QR codes because those are committed.
+# per-painting size data and donation QR codes. Runs before hugo in dev.sh,
+# and inside the cluster job with DERIVE_VOLUME set, which produces only
+# what the volume serves (static/w, static/dl) and skips size data and QR
+# codes because those are committed.
 # Requires vips, yq (Go version) and qrencode; see README.
 set -eu
 
@@ -32,6 +33,17 @@ stale() {
 dim() { vipsheader -f "$2" "$1"; }
 bytes() { stat -c %s "$1"; }
 
+# Thumbnail and previews of one area of the original: web_images <file
+# prefix> <x> <y> <width> <height>.
+web_images() {
+  tmp=$(mktemp -u).v
+  vips extract_area "$orig" "$tmp" "$2" "$3" "$4" "$5"
+  vips thumbnail "$tmp" "$web/${1}thumb.webp[Q=82,strip]" 480
+  vips thumbnail "$tmp" "$web/${1}preview.webp[Q=84,strip]" 1600
+  vips thumbnail "$tmp" "$web/${1}preview.jpg[Q=86,strip]" 1600
+  rm -f "$tmp"
+}
+
 fail=0
 for md in content/paintings/*.md; do
   slug=$(basename "$md" .md)
@@ -42,8 +54,8 @@ for md in content/paintings/*.md; do
   esac
 
   orig="originals/$(fm .original "$md")"
-  if [ ! -s "$orig" ] || head -c 7 "$orig" | grep -q '^version'; then
-    echo "derive: $md: $orig missing or an unfetched LFS pointer" >&2; fail=1; continue
+  if [ ! -s "$orig" ]; then
+    echo "derive: $md: $orig missing" >&2; fail=1; continue
   fi
 
   w=$(dim "$orig" width); h=$(dim "$orig" height)
@@ -69,15 +81,8 @@ for md in content/paintings/*.md; do
   tr_=$(fm '.trim[2] // 0' "$md"); tb=$(fm '.trim[3] // 0' "$md")
   uw=$((w - tl - tr_)); uh=$((h - tt - tb))
 
-  if [ -z "${DERIVE_CUTS_ONLY:-}" ]; then
-    if stale "$web/thumb.webp" "$orig" "$stamp" || stale "$web/preview.webp" "$orig" "$stamp"; then
-      tmp=$(mktemp -u).v
-      vips extract_area "$orig" "$tmp" "$tl" "$tt" "$uw" "$uh"
-      vips thumbnail "$tmp" "$web/thumb.webp[Q=82,strip]" 480
-      vips thumbnail "$tmp" "$web/preview.webp[Q=84,strip]" 1600
-      vips thumbnail "$tmp" "$web/preview.jpg[Q=86,strip]" 1600
-      rm -f "$tmp"
-    fi
+  if stale "$web/thumb.webp" "$orig" "$stamp" || stale "$web/preview.webp" "$orig" "$stamp"; then
+    web_images "" "$tl" "$tt" "$uw" "$uh"
   fi
   ext=${orig##*.}
   if stale "$dl/$slug-original.$ext" "$orig"; then
@@ -113,15 +118,10 @@ for md in content/paintings/*.md; do
           print x + ox, y + oy, bw, bh }')
       fi
       set -- $box; bx=$1; by=$2; bw=$3; bh=$4
-      if [ -n "$slice" ] && [ "$aspect" = "16:9" ] && [ -z "$preview_done" ] && [ -z "${DERIVE_CUTS_ONLY:-}" ]; then
+      if [ -n "$slice" ] && [ "$aspect" = "16:9" ] && [ -z "$preview_done" ]; then
         preview_done=1
         if stale "$web/${prefix}preview.webp" "$orig" "$stamp" || stale "$web/${prefix}thumb.webp" "$orig" "$stamp"; then
-          tmp=$(mktemp -u).v
-          vips extract_area "$orig" "$tmp" "$bx" "$by" "$bw" "$bh"
-          vips thumbnail "$tmp" "$web/${prefix}preview.webp[Q=84,strip]" 1600
-          vips thumbnail "$tmp" "$web/${prefix}preview.jpg[Q=86,strip]" 1600
-          vips thumbnail "$tmp" "$web/${prefix}thumb.webp[Q=82,strip]" 480
-          rm -f "$tmp"
+          web_images "$prefix" "$bx" "$by" "$bw" "$bh"
         fi
       fi
       if awk -v bw="$bw" -v tw="$tw" -v tol="$UPSCALE_TOLERANCE" 'BEGIN { exit !(bw >= tw * (1 - tol)) }'; then
@@ -150,7 +150,8 @@ for md in content/paintings/*.md; do
         fi
         rm -f "$tmp"
       fi
-      variants="$variants{\"slice\":\"$slice\",\"aspect\":\"$aspect\",\"class\":\"$class\",\"full\":$full,\"upscale\":$upscale,\"file\":\"$name\",\"width\":$(dim "$out" width),\"height\":$(dim "$out" height),\"bytes\":$(bytes "$out")},"
+      [ -n "${DERIVE_VOLUME:-}" ] ||
+        variants="$variants{\"slice\":\"$slice\",\"aspect\":\"$aspect\",\"class\":\"$class\",\"full\":$full,\"upscale\":$upscale,\"file\":\"$name\",\"width\":$(dim "$out" width),\"height\":$(dim "$out" height),\"bytes\":$(bytes "$out")},"
     done
     i=$((i + 1))
     [ "${nslices:-0}" -gt 0 ] || break
@@ -167,36 +168,38 @@ for md in content/paintings/*.md; do
     case "$slice_names" in *" $n "*) ;; *) rm -f "$f" ;; esac
   done
 
-  mkdir -p data/derived
-  printf '{"original":{"file":"%s-original.%s","width":%s,"height":%s,"bytes":%s},"variants":[%s]}\n' \
-    "$slug" "$ext" "$w" "$h" "$(bytes "$orig")" "${variants%,}" > "data/derived/$slug.json"
+  if [ -z "${DERIVE_VOLUME:-}" ]; then
+    mkdir -p data/derived
+    printf '{"original":{"file":"%s-original.%s","width":%s,"height":%s,"bytes":%s},"variants":[%s]}\n' \
+      "$slug" "$ext" "$w" "$h" "$(bytes "$orig")" "${variants%,}" > "data/derived/$slug.json"
+  fi
 done
 
 for d in static/dl/* static/w/*; do
   [ -d "$d" ] || continue
   [ -e "content/paintings/$(basename "$d").md" ] || rm -rf "$d"
 done
-for j in data/derived/*.json; do
-  [ -e "$j" ] || continue
-  [ -e "content/paintings/$(basename "$j" .json).md" ] || rm -f "$j"
-done
+if [ -z "${DERIVE_VOLUME:-}" ]; then
+  for j in data/derived/*.json; do
+    [ -e "$j" ] || continue
+    [ -e "content/paintings/$(basename "$j" .json).md" ] || rm -f "$j"
+  done
 
-[ -z "${DERIVE_CUTS_ONLY:-}" ] || { [ "$fail" -eq 0 ] || { echo "derive: failed" >&2; exit 1; }; exit 0; }
-
-cfg=config/_default/hugo.toml
-mkdir -p static/qr
-qr() {
-  name=$1; prefix=$2
-  value=$(yq -p toml -oy -r ".params.donate.$name // \"\"" "$cfg")
-  out="static/qr/$name.svg"
-  if [ -z "$value" ]; then rm -f "$out"; return 0; fi
-  if stale "$out" "$cfg"; then
-    qrencode -t SVG -l M -m 1 -o "$out" "$prefix$value"
-  fi
-}
-qr bitcoin "bitcoin:"
-qr bitcoin_sp "bitcoin:"
-qr lightning "lightning:"
-qr monero "monero:"
+  cfg=config/_default/hugo.toml
+  mkdir -p static/qr
+  qr() {
+    name=$1; prefix=$2
+    value=$(yq -p toml -oy -r ".params.donate.$name // \"\"" "$cfg")
+    out="static/qr/$name.svg"
+    if [ -z "$value" ]; then rm -f "$out"; return 0; fi
+    if stale "$out" "$cfg"; then
+      qrencode -t SVG -l M -m 1 -o "$out" "$prefix$value"
+    fi
+  }
+  qr bitcoin "bitcoin:"
+  qr bitcoin_sp "bitcoin:"
+  qr lightning "lightning:"
+  qr monero "monero:"
+fi
 
 [ "$fail" -eq 0 ] || { echo "derive: failed" >&2; exit 1; }

@@ -4,11 +4,12 @@ A static gallery of museum scans of paintings, offered as wallpapers for 5K and 
 
 ## Running locally
 
-Everything runs in a container built from `Containerfile.dev` (Alpine with hugo, vips, qrencode, yq). Nothing needs installing on the host beyond podman or docker.
+Everything runs in the `dev` target of the `Dockerfile` (Alpine with hugo, vips, qrencode, yq), with the repo bind-mounted. Nothing needs installing on the host beyond podman or docker; `dev.sh` uses whichever is present, `CONTAINER_RUNTIME` picks one when both are.
 
 ```sh
-./dev.sh     # derive images, then hugo server on http://localhost:6131 with live reload (PORT overrides; 1313 stays free for other hugo work)
-./build.sh   # derive images, then hugo --minify into public/
+./dev.sh                     # derive images, then hugo server on http://localhost:6131 with live reload (PORT overrides; 1313 stays free for other hugo work)
+./dev.sh scripts/fetch.sh    # any command runs in the same container instead
+podman build .               # the production site image, including the Hugo build and link check CI runs (docker build . works the same)
 ```
 
 `hugo server` runs with `--poll` because file change notifications do not cross the podman volume mount on macOS; without it, edits to layouts are missed until a restart.
@@ -57,7 +58,7 @@ Candidate scans can be dropped into `incoming/`, which is gitignored; check thei
        focal: [0.5, 0.85]
    ```
 
-4. Run `scripts/fetch.sh` (inside the dev container) if the file is not yet in `originals/`. It downloads from a `download:` URL when set, otherwise from the Wikimedia Commons file page in `source:`.
+4. Run `./dev.sh scripts/fetch.sh` if the file is not yet in `originals/`. It downloads from a `download:` URL when set, otherwise from the Wikimedia Commons file page in `source:`.
 5. Run `./dev.sh` and check the cuts on the painting page.
 
 ## What derive.sh produces
@@ -68,10 +69,10 @@ Candidate scans can be dropped into `incoming/`, which is gitignored; check thei
 | `static/w/<slug>/preview.webp`, `preview.jpg` | 1600px wide, painting page |
 | `static/dl/<slug>/<slug>-original.<ext>` | byte-identical copy of the source, extension preserved |
 | `static/dl/<slug>/<slug>-<w>x<h>.jpg` | fitted cuts, see the tier table below; slices insert their name: `<slug>-<slice>-<w>x<h>.jpg` |
-
-File names carry the slug so cuts from many paintings can share one folder without renaming. `scripts/check-links.sh` verifies that every `/dl/`, `/w/` and `/qr/` reference in the built site resolves; CI runs it on every push, and `--live <url>` checks a deployed site.
 | `data/derived/<slug>.json` | real pixel sizes and byte counts, read by the download table |
 | `static/qr/<name>.svg` | QR codes for the configured donation addresses |
+
+File names carry the slug so cuts from many paintings can share one folder without renaming. `scripts/check-links.sh` verifies that every `/dl/`, `/w/` and `/qr/` reference in the built site resolves; the site image build runs it, and `--live <url>` checks a deployed site.
 
 Cut targets and the display tier each one fills exactly:
 
@@ -87,7 +88,7 @@ Only 16:9 exists at 5K and above among conventional monitors. 3:2 and 4:3 panels
 
 A crop box that misses its target by at most 1% (`UPSCALE_TOLERANCE` in `scripts/derive.sh`) is upscaled to the target, counts as full, and its page shows the factor. Beyond that nothing is upscaled: when the crop box is smaller than the target, the file is emitted at the box's native size, flagged `full: false` in the JSON, and named by its real dimensions; two targets that collapse to the same box produce one file. The gallery filter (All / 6K / 5K / 4K) counts only full-size cuts, so a painting is listed under 5K only if at least one 5K target came out at exactly that size. A second filter row narrows by painter, and `new: true` in front matter flags the latest additions with a NEW badge and a NEW filter token.
 
-Thumbnails, previews, QR codes and the size data are committed: Hugo needs them and CI has no originals to derive them from. Cuts and originals are gitignored and never enter the repo or the site image.
+Only the size data and the QR codes are committed: Hugo needs them at build time, and neither CI nor the site image ever sees an original. Thumbnails, previews, cuts and originals are gitignored; locally `derive.sh` writes them for `hugo server`, on the cluster the Job writes them to the volume nginx serves.
 
 ## Licenses
 
@@ -108,15 +109,15 @@ Addresses live in `config/_default/hugo.toml` under `[params.donate]`. They are 
 
 ## Deployment
 
-CI (`.github/workflows/image.yml`) builds two images per commit on `main`, tagged `<epoch>-<sha>`, and pushes them to GHCR:
+CI (`.github/workflows/image.yml`) builds two targets of the `Dockerfile` per commit on `main`, tagged `<epoch>-<sha>`, and pushes them to GHCR. Pull requests build both without pushing. Layers are cached in the GitHub Actions cache, so a content-only commit reruns just the Hugo build and the final copies.
 
-| Image | Built from | Runs as |
-|---|---|---|
-| `ghcr.io/circumspace/wallhalle` | `Dockerfile`: Hugo build stage, then `nginxinc/nginx-unprivileged` with `public/` and `nginx/default.conf` | the site Deployment |
-| `ghcr.io/circumspace/wallhalle-tools` | `Dockerfile.tools`: Alpine with vips, yq, curl plus `content/`, `config/`, `scripts/` | a Job that fills the volume |
+| Image | Target | Content | Runs as |
+|---|---|---|---|
+| `ghcr.io/circumspace/wallhalle` | `site` (default) | `nginxinc/nginx-unprivileged` with the Hugo output of the `build` stage and `nginx/default.conf` | the site Deployment |
+| `ghcr.io/circumspace/wallhalle-tools` | `tools` | Alpine with vips, yq, curl plus `content/`, `scripts/`, `bundled/` | a Job that fills the volume |
 
-The cluster side lives in the infrastructure repo under `kubernetes/apps/wallhalle`. Flux image automation bumps both tags. The Job runs `scripts/cluster-sync.sh`: it points `originals/` and `static/dl` at the mounted volume, runs `fetch.sh` (skips files already present) and `derive.sh` with `DERIVE_CUTS_ONLY` set. Every content commit produces a new tools tag, Flux recreates the Job, and only new paintings cost download and vips time. The site pod mounts the same volume at `/srv/wallhalle` and nginx aliases `/dl/` onto it.
+The cluster side lives in the infrastructure repo under `kubernetes/apps/wallhalle`. Flux image automation bumps both tags. The Job runs `scripts/cluster-sync.sh`: it points `originals/`, `static/w` and `static/dl` at the mounted volume, runs `fetch.sh` (skips files already present) and `derive.sh` with `DERIVE_VOLUME` set, which writes thumbnails, previews and cuts but not the committed size data or QR codes. Every content commit produces a new tools tag, Flux recreates the Job, and only new paintings cost download and vips time. The site pod mounts the same volume at `/srv/wallhalle` and nginx aliases `/w/` and `/dl/` onto it.
 
-Adding a painting end to end: write the content page, run `./dev.sh` locally to fetch, derive and check the focal point, commit the page plus its thumbnail, preview and size JSON, push. CI ships the site with the new page; the cluster Job fetches the original and cuts it.
+Adding a painting end to end: write the content page, run `./dev.sh` locally to fetch, derive and check the focal point, commit the page plus its size JSON, push. CI ships the site with the new page; the cluster Job fetches the original and derives its thumbnail, previews and cuts. Until the Job finishes, the new page shows no images and its downloads return 404.
 
-The volume is the only copy of originals and cuts on the cluster. Losing it costs a re-run of the Job, roughly 15 minutes for 60 paintings, not data: everything is refetchable from the source URLs while those stay up.
+The volume is the only copy of originals and derived images on the cluster. Losing it costs a re-run of the Job, roughly 15 minutes for 60 paintings, not data: everything is refetchable from the source URLs while those stay up.

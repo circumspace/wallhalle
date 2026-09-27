@@ -1,5 +1,14 @@
-.git
-originals
+# Allowlist: the context holds only what a Dockerfile stage copies.
+# Painting files (originals, cuts, thumbnails, previews) never enter it.
+*
+!assets
+!bundled
+!config
+!content
+!data
+!layouts
+!nginx
+!scripts
+!static
 static/dl
-public
-resources
+static/w

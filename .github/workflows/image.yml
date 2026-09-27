@@ -1,13 +1,17 @@
-# Builds two images and publishes them to GHCR: the site (nginx with the
-# Hugo output) and the tools image (fetch and derive for the cluster job).
+# Builds the two images from the one Dockerfile and publishes them to GHCR:
+# the site (target `site`: nginx with the Hugo output) and the tools image
+# (target `tools`: fetch and derive for the cluster job). The Hugo build and
+# the link check run inside the site build, so the output that is checked
+# is the output that ships. No painting file is involved: the context is
+# the git checkout, and the Job fetches and derives on the cluster.
 #
 # The tag is <unix-epoch>-<short-sha>, shared by both images from one
 # commit, sortable by the leading number. The Flux ImagePolicies in the
 # infrastructure repo select on that number and image automation commits
 # the bumps there; nothing in this repo talks to the cluster.
 #
-# On pull requests both images build without a push, so a broken template
-# or Dockerfile is caught at the PR gate.
+# On pull requests both images build without a push, so a broken template,
+# dead link or Dockerfile is caught at the PR gate.
 name: image
 on:
   push:
@@ -17,30 +21,46 @@ on:
 permissions:
   contents: read
   packages: write
+concurrency:
+  group: image-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 jobs:
   image:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    env:
+      IMAGE: ghcr.io/${{ github.repository }}
+      PUSH: ${{ github.event_name != 'pull_request' }}
     steps:
-      - uses: actions/checkout@v7
-      - name: build site and check links
-        run: |
-          docker run --rm -v "$PWD:/src" -w /src alpine:3.22 sh -c \
-            'apk add --no-cache hugo >/dev/null && hugo --minify --cleanDestinationDir && scripts/check-links.sh'
-      - name: build images
-        run: |
-          TAG="$(date +%s)-$(git rev-parse --short HEAD)"
-          echo "TAG=$TAG" >> "$GITHUB_ENV"
-          for variant in "" "-tools"; do
-            docker build -t "ghcr.io/${{ github.repository }}$variant:$TAG" \
-              -f "Dockerfile${variant/-/.}" \
-              --label "org.opencontainers.image.source=https://github.com/${{ github.repository }}" \
-              --label "org.opencontainers.image.revision=${{ github.sha }}" \
-              .
-          done
-      - name: push images
-        if: github.event_name != 'pull_request'
-        run: |
-          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
-          docker push "ghcr.io/${{ github.repository }}:$TAG"
-          docker push "ghcr.io/${{ github.repository }}-tools:$TAG"
+      - run: echo "TAG=$(date +%s)-${GITHUB_SHA::7}" >> "$GITHUB_ENV"
+      - uses: docker/setup-buildx-action@v4
+      - if: env.PUSH == 'true'
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      # Each target keeps its own cache scope; a shared one would be
+      # overwritten by whichever build exports last.
+      - name: site
+        uses: docker/build-push-action@v7
+        with:
+          target: site
+          push: ${{ env.PUSH }}
+          tags: ${{ env.IMAGE }}:${{ env.TAG }}
+          labels: |
+            org.opencontainers.image.source=https://github.com/${{ github.repository }}
+            org.opencontainers.image.revision=${{ github.sha }}
+          cache-from: type=gha,scope=site
+          cache-to: type=gha,scope=site,mode=max
+      - name: tools
+        uses: docker/build-push-action@v7
+        with:
+          target: tools
+          push: ${{ env.PUSH }}
+          tags: ${{ env.IMAGE }}-tools:${{ env.TAG }}
+          labels: |
+            org.opencontainers.image.source=https://github.com/${{ github.repository }}
+            org.opencontainers.image.revision=${{ github.sha }}
+          cache-from: type=gha,scope=tools
+          cache-to: type=gha,scope=tools,mode=max
