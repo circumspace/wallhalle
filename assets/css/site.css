@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "Bajern";
+  src: url("/fonts/bajern.otf") format("opentype");
+  font-display: swap;
+}
 :root {
   color-scheme: dark;
   --bg: #0d0d10;
@@ -22,7 +27,9 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
   display: flex; justify-content: space-between; align-items: baseline;
   padding-top: 1.25rem; padding-bottom: 1.25rem;
 }
-.brand { font-weight: 700; letter-spacing: 0.04em; text-decoration: none; color: var(--fg); }
+/* Bajern has one weight; bold would be synthesized. Letter-spacing is off
+   because any non-zero value disables the font's ligatures. */
+.brand { font-family: "Bajern", serif; font-size: 4em; font-weight: 400; line-height: 1; text-decoration: none; color: var(--fg); }
 nav a { margin-left: 1.25rem; color: var(--muted); text-decoration: none; }
 nav a:hover { color: var(--fg); }
 .site-footer { padding: 3rem 1.25rem; color: var(--muted); font-size: 0.9rem; border-top: 1px solid var(--line); margin-top: 4rem; }

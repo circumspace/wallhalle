@@ -4,5 +4,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ if not .IsHome }}{{ .Title }} | {{ end }}{{ site.Title }}</title>
   <meta name="description" content="{{ with .Params.artist }}{{ . }}, {{ $.Title }}. {{ end }}{{ site.Params.tagline }}">
+  <link rel="preload" href="{{ "/fonts/bajern.otf" | relURL }}" as="font" type="font/otf" crossorigin>
   <link rel="stylesheet" href="{{ $css.RelPermalink }}">
 </head>
