@@ -62,7 +62,7 @@ Sizes are the Commons file, width x height. "6K" marks files that clear 6084x342
 - Karl Bryullov: The Last Day of Pompeii 30000x21059 (GAP, 6K).
 - Ivan Aivazovsky: The Ninth Wave 5815x3840. Wellengang auf hoher See 8083x5132 (6K). Reval 6000x4349. Storm 1887 5024x3520 (short of 5K). Check each file's source; several are Russian Museum GAP uploads.
 - J. M. W. Turner: Dort or Dordrecht 8377x5603 (Yale, GAP, 6K). The Burning of the Houses of Lords and Commons 15155x11254 (Cleveland, 6K). Conway Castle 9510x6672 and Longships Lighthouse 6444x4188 (Getty, 6K). Snow Storm, Steam-Boat off a Harbour's Mouth 7247x5448 and The Fighting Temeraire 6000x4455 are Tate and National Gallery London works, licence position disputed.
-- Francis Danby: Shipwreck 5081x3921 (GAP, 5K with tolerance). Funeral Procession 6409x4006 (6K). The Painter's Holiday 6475x4531 (6K). Hampstead Heath Sunset 5803x4315. His Deluge is at Tate.
+- Francis Danby: Shipwreck 5081x3921 (GAP, 5K with tolerance) ✓. Funeral Procession 6409x4006 (6K) ✓. The Painter's Holiday 6475x4531 (6K) ✓. Hampstead Heath Sunset 5803x4315 (5K) ✓. His Deluge is at Tate.
 - Gustave Doré: Scottish Highlands 7729x4583 (GAP, 6K). L'aube, souvenir des Alpes 6979x4739 (6K). Vallée des larmes 6924x4859 (6K). Torrent in the Highlands 5686x3184 (Indianapolis). Brand van Rome (MSK Gent) was tried and dropped: the scan carries a colour chart and a white margin, and the picture is too dark and small to read as a wallpaper.
 
 ### Northern romanticism, night and ice
