@@ -4,13 +4,14 @@ Working list of where to find paintings that fill 5K and 6K screens, and which p
 
 ## Minimum sizes
 
-With the 1% upscale tolerance in `scripts/derive.sh`, a 16:9 cut needs a crop box of at least:
+With the 1% upscale tolerance in `scripts/derive.sh`, a cut needs a crop box of at least:
 
-| Tier | Width | Height |
-|---|---|---|
-| 6K (6144x3456) | 6084 | 3422 |
-| 5K (5120x2880) | 5069 | 2851 |
-| 4K (3840x2160) | 3802 | 2139 |
+| Tier | Aspect | Width | Height |
+|---|---|---|---|
+| 6K (6144x3456) | 16:9 | 6084 | 3422 |
+| 5K (5120x2880) | 16:9 | 5069 | 2851 |
+| 4K (3840x2160) | 16:9 | 3802 | 2139 |
+| 4K (3840x2560) | 3:2 | 3802 | 2535 |
 
 Width is the usual limit for landscape paintings. Height bites on wide panoramas (Khnopff's Caresses at 8859x2883 makes 5K only just).
 
@@ -143,7 +144,7 @@ Sizes are the Commons file, width x height. "6K" marks files that clear 6084x342
 
 ## Candidate painters, 1750-1910
 
-Work through against the gates (crop box >= 3802x2139, license PD/CC0/CC-BY-4.0, museum-grade scan). Marks: ✓ already on the site; ↯ already researched in the leads or dead ends above; (nc) the obvious source is a known-closed license wall (SMB/Berlin, Hamburg, Städel, Tate, Louvre/RMN, Tretyakov) — hunt for open copies elsewhere before giving up. Check any source against the Institutions table at the top.
+Work through against the gates (a 16:9 crop box >= 3802x2139 or 3:2 crop box >= 3802x2535, license PD/CC0/CC-BY-4.0, museum-grade scan). Marks: ✓ already on the site; ↯ already researched in the leads or dead ends above; (nc) the obvious source is a known-closed license wall (SMB/Berlin, Hamburg, Städel, Tate, Louvre/RMN, Tretyakov) — hunt for open copies elsewhere before giving up. Check any source against the Institutions table at the top.
 
 ### Northern landscape and romance (Scandinavia, Denmark, Germany)
 - Carl Gustav Carus 1789-1869, Dresden moonlight landscapes; Dresden sources open?

@@ -1,7 +1,7 @@
 {{ define "main" }}
 <section class="intro">
   <h1>{{ site.Params.tagline }}</h1>
-  <p>Museum scans of paintings, offered untouched at their full resolution, plus exact cuts for 16:9 and 16:10 screens. Free to download. <a href="{{ "/donate/" | relURL }}">Donations</a> keep it going.</p>
+  <p>Museum scans of paintings, offered untouched at their full resolution, plus exact cuts for 16:9, 16:10 and 3:2 screens. Free to download. <a href="{{ "/donate/" | relURL }}">Donations</a> keep it going.</p>
 </section>
 {{ partial "notice.html" . }}
 {{ $artists := slice }}
@@ -12,7 +12,7 @@
   <button type="button" data-fit="" aria-pressed="true">All</button>
   <button type="button" data-fit="6k" aria-pressed="false">6K <small>6144 x 3456, 6016 x 3384</small></button>
   <button type="button" data-fit="5k" aria-pressed="false">5K <small>5120 x 2880, 5120 x 3200</small></button>
-  <button type="button" data-fit="4k" aria-pressed="false">4K <small>3840 x 2160</small></button>
+  <button type="button" data-fit="4k" aria-pressed="false">4K <small>3840 x 2160, 3840 x 2560</small></button>
   <button type="button" data-fit="new" aria-pressed="false">NEW <small>recent additions</small></button>
 </nav>
 <details class="filter-artist-box">

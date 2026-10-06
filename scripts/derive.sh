@@ -15,9 +15,11 @@ ALLOWED_LICENSES="PD CC0 CC-BY-4.0"
 # but is flagged full=false and does not count for the gallery filter.
 # A crop box short of its target by at most this fraction is upscaled to the
 # target and counts as full. 1% is invisible on a wallpaper and lets scans
-# that miss a tier by a few pixels still fill the screen.
+# that miss a tier by a few pixels still fill the screen. The 3:2 target is
+# full-size only: unlike the established ratios, undersized 3:2 cuts are not
+# emitted.
 UPSCALE_TOLERANCE=0.01
-VARIANTS="16:9,6144,3456,6k 16:9,6016,3384,6k 16:9,5120,2880,5k 16:9,3840,2160,4k 16:10,5120,3200,5k"
+VARIANTS="16:9,6144,3456,6k 16:9,6016,3384,6k 16:9,5120,2880,5k 16:9,3840,2160,4k 16:10,5120,3200,5k 3:2,3840,2560,4k"
 
 fm() { yq --front-matter=extract -r "$1" "$2"; }
 
@@ -129,6 +131,7 @@ for md in content/paintings/*.md; do
       else
         ow=$bw; oh=$bh; full=false
       fi
+      [ "$aspect" != "3:2" ] || [ "$full" = true ] || continue
       upscale=$(awk -v a="$ow" -v b="$bw" 'BEGIN { s = a / b; if (s < 1) s = 1; printf "%.4f", s }')
       name="$slug-$prefix${ow}x${oh}.jpg"
       case " $seen " in *" $name "*) continue ;; esac
