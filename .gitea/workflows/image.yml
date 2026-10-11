@@ -1,0 +1,71 @@
+# Builds the two images from the one Dockerfile and publishes them to this
+# Gitea's registry: the site (target `site`: nginx with the Hugo output; the
+# build and the link check run inside, so the output that is checked is the
+# output that ships) and the tools image (target `tools`: fetch and derive
+# for the cluster Job). No painting file is involved: the context is the git
+# checkout, and the Job fetches and derives on the cluster.
+#
+# The tag is <unix-epoch>-<short-sha>, shared by both images from one
+# commit and sortable by the leading number, so an ImagePolicy pointed at
+# this registry can select on it the way the old GHCR one did.
+#
+# runs-on is pinned to build: the daemon runner whose jobs get its rootless
+# podman socket. Podman's Docker API has no BuildKit, so builds use the
+# classic builder and push tag by tag. On pull requests both targets build
+# without a push, so a broken template, dead link or Dockerfile is caught
+# at the PR gate.
+#
+# The automatic Actions token cannot write packages of a private org in
+# Gitea 28, so the push uses REGISTRY_TOKEN: a write:package token of the
+# bot user circumspace-ci; see infrastructure kubernetes/RUNBOOK.md,
+# "Registry access".
+name: image
+on:
+  push:
+    branches: [main]
+  pull_request: {}
+  workflow_dispatch: {}
+env:
+  IMAGE: git.circum.space/circumspace/wallhalle
+  REGISTRY_USER: circumspace-ci
+jobs:
+  image:
+    runs-on: build
+    timeout-minutes: 30
+    env:
+      PUSH: ${{ github.event_name != 'pull_request' }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Tag
+        run: echo "TAG=$(date +%s)-${GITHUB_SHA::7}" >> "$GITHUB_ENV"
+
+      - name: Log in to the registry
+        if: env.PUSH == 'true'
+        env:
+          REGISTRY_TOKEN: ${{ secrets.REGISTRY_TOKEN }}
+        run: printf '%s' "$REGISTRY_TOKEN" | docker login git.circum.space -u "$REGISTRY_USER" --password-stdin
+
+      - name: site
+        env:
+          DOCKER_BUILDKIT: "0"
+        run: |
+          docker build --pull --target site \
+            --label org.opencontainers.image.source=https://git.circum.space/circumspace/wallhalle \
+            --label org.opencontainers.image.revision=$GITHUB_SHA \
+            -t $IMAGE:$TAG .
+          [ "$PUSH" != true ] || docker push $IMAGE:$TAG
+
+      - name: tools
+        env:
+          DOCKER_BUILDKIT: "0"
+        run: |
+          docker build --pull --target tools \
+            --label org.opencontainers.image.source=https://git.circum.space/circumspace/wallhalle \
+            --label org.opencontainers.image.revision=$GITHUB_SHA \
+            -t $IMAGE-tools:$TAG .
+          [ "$PUSH" != true ] || docker push $IMAGE-tools:$TAG
+
+      - name: Log out
+        if: always()
+        run: docker logout git.circum.space || true
