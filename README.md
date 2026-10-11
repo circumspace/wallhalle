@@ -110,14 +110,14 @@ Addresses live in `config/_default/hugo.toml` under `[params.donate]`. They are 
 
 ## Deployment
 
-CI (`.github/workflows/image.yml`) builds two targets of the `Dockerfile` per commit on `main`, tagged `<epoch>-<sha>`, and pushes them to GHCR. Pull requests build both without pushing. Layers are cached in the GitHub Actions cache, so a content-only commit reruns only the Hugo build and the layers that copy the repo.
+CI (`.gitea/workflows/image.yml`) builds two targets of the `Dockerfile` per commit on `main`, tagged `<epoch>-<sha>`, and pushes them to this Gitea's registry, `git.circum.space`. Pull requests build both without pushing. Both targets build on the `build` daemon runner (rootless podman, classic builder); its image cache spans runs, so a content-only commit rebuilds little beyond the Hugo build and the layers that copy the repo.
 
 | Image | Target | Content | Runs as |
 |---|---|---|---|
-| `ghcr.io/circumspace/wallhalle` | `site` (default) | `nginxinc/nginx-unprivileged` with the Hugo output of the `build` stage and `nginx/default.conf` | the site Deployment |
-| `ghcr.io/circumspace/wallhalle-tools` | `tools` | Alpine with vips, yq, curl plus `content/`, `scripts/`, `bundled/` | a Job that fills the volume |
+| `git.circum.space/circumspace/wallhalle` | `site` (default) | `nginxinc/nginx-unprivileged` with the Hugo output of the `build` stage and `nginx/default.conf` | the site Deployment |
+| `git.circum.space/circumspace/wallhalle-tools` | `tools` | Alpine with vips, yq, curl plus `content/`, `scripts/`, `bundled/` | a Job that fills the volume |
 
-The cluster side lives in the infrastructure repo under `kubernetes/apps/wallhalle`. Flux image automation bumps both tags. The Job runs `scripts/cluster-sync.sh`: it points `originals/`, `static/w` and `static/dl` at the mounted volume, runs `fetch.sh` (skips files already present) and `derive.sh` with `DERIVE_VOLUME` set, which writes thumbnails, previews and cuts but not the committed size data or QR codes. Every content commit produces a new tools tag, Flux recreates the Job, and only new paintings cost download and vips time. The site pod mounts the same volume at `/srv/wallhalle` and nginx aliases `/w/` and `/dl/` onto it.
+The cluster side lives in the infrastructure repo under `kubernetes/apps/wallhalle`. Flux image automation bumps both tags; its ImagePolicies still watch GHCR, so until they are repointed at this registry, a new tag reaches the cluster as a hand-bumped digest (kubernetes/RUNBOOK.md, "New image"). The Job runs `scripts/cluster-sync.sh`: it points `originals/`, `static/w` and `static/dl` at the mounted volume, runs `fetch.sh` (skips files already present) and `derive.sh` with `DERIVE_VOLUME` set, which writes thumbnails, previews and cuts but not the committed size data or QR codes. Every content commit produces a new tools tag, Flux recreates the Job, and only new paintings cost download and vips time. The site pod mounts the same volume at `/srv/wallhalle` and nginx aliases `/w/` and `/dl/` onto it.
 
 Adding a painting end to end: write the content page, run `./dev.sh` locally to fetch, derive and check the focal point, commit the page plus its size JSON, push. CI ships the site with the new page; the cluster Job fetches the original and derives its thumbnail, previews and cuts. Until the Job finishes, the new page shows no images and its downloads return 404.
 
