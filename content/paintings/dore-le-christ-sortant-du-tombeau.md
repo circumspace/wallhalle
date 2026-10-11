@@ -8,4 +8,5 @@ source: "https://commons.wikimedia.org/wiki/File:Le_Christ_sortant_du_tombeau_ME
 license: PD
 original: dore-le-christ-sortant-du-tombeau.jpg
 focal: [0.5, 0.5]
+trim: [36, 60, 36, 44]   # whitish scan panel around the sheet
 ---
