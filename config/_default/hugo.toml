@@ -3,6 +3,7 @@ title = "wallhalle"
 languageCode = "en"
 disableKinds = ["taxonomy", "term", "rss", "sitemap"]
 enableRobotsTXT = true
+disableHugoGeneratorInject = true
 
 [params]
   tagline = "Paintings of the sublime, sized for large screens"
