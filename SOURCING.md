@@ -144,6 +144,7 @@ Sizes are the Commons file, width x height. "6K" marks files that clear 6084x342
 - Harold Speed (1872-1957): one file on Commons, Roses and Chintz 4027x5532, a halftone from Cassell's 1908 Royal Academy Pictures (Google Books extraction, PD-US-expired). A 16:9 band would clear 4K on size, but Speed is not PD in the UK or EU until 2028 and a periodical halftone is not a museum scan. No category, nothing else at any size. Revisit in 2028. (checked 2026-10-10)
 - Otto Knille (1832-1898): the Rijksmuseum's Gustav Freytag-Galerie (1882) lichtdruk pages are CC0 at 8126x5312 to 8222x5420, but that is the album page; the collotype plate inside (134x176 mm on a larger sheet) measures about 3330x4150, fitted 16:9 about 3330x1873, below the 4K floor of 3764. Plate 21 (Gottfried at the bishop, Die Ahnen) is the only Knille in the 31-plate series; the rest are after Kaulbach, Liezen-Mayer, Doepler, Becker, Schuch, Friedrich and Skarbina, and no plate's image spans more than 44% of its page. Everything else by Knille is under 2900 px or the anagoria photo of Tannhäuser und Venus (2824x2564, framed). (checked 2026-10-10)
 - Max Nonnenbruch (1857-1922): no painting scan reaches 4K; the widest are Junge Schönheit 3072x5687 (Dorotheum auction scan, PD), Junge Bacchantin 2784x4724 and Dame mit Schleier 2560x4250. Print-afters: the Rijksmuseum's c.1901 Pictura photograph RP-F-00-6340 (4954x6424, CC0; plate fills about 95% of the scan, 16:9 band about 4700 px wide, 4K; inscription recto needs a trim, check first), and the Gartenlaube 1898 wood-engraving extract (3764x2556), which sits exactly on the 4K tolerance floor and passes only edge to edge. The Zentralbibliothek Zürich Wasserträgerin reproduction's plate is about 2300 px wide inside its 3993 px scan. (checked 2026-10-10)
+- José Benlliure Gil (1855-1937): all Commons files max at 2913 px wide (La visión del Coliseo), below the 3802 px 4K gate. Prado API returns empty bodies. Dead end. (checked 2026-10-22)
 
 ## Candidate painters, 1750-1910
 
@@ -159,8 +160,8 @@ Work through against the gates (a 16:9 crop box >= 3802x2139 or 3:2 crop box >= 
 - Carl Rottmann 1797-1850, Greek views; Pinakothek is (nc) BY-SA
 - Ernst Fries 1801-1833, Italian views; Karlsruhe, check
 - Johann Wilhelm Schirmer 1807-1863, Düsseldorf landscapes
-- Andreas Achenbach 1815-1910, romantic seascapes (PD in EU since 1980)
-- Oswald Achenbach 1827-1905, Italian seascapes
+- Andreas Achenbach 1815-1910, romantic seascapes (PD in EU since 1980) ✓
+- Oswald Achenbach 1827-1905, Italian seascapes ✓
 - Louis Gurlitt 1812-1897, Danish-German landscape
 - Eduard Hildebrandt 1818-1869, world-travel lightscapes
 - Eduard Schleich the Elder 1812-1874, moody Bavarian plains
