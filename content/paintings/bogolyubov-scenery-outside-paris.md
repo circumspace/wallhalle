@@ -6,5 +6,4 @@ source: "https://commons.wikimedia.org/wiki/File:Aleksei_Bogoljubov_-_Scenery_ou
 license: PD
 original: bogolyubov-scenery-outside-paris.jpg
 focal: [0.5, 0.5]
-new: true
 ---

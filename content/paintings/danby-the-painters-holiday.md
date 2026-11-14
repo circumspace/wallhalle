@@ -8,5 +8,4 @@ source: "https://commons.wikimedia.org/wiki/File:Francis_Danby_-_The_Painter%27s
 license: PD
 original: danby-the-painters-holiday.jpg
 focal: [0.5, 0.5]
-new: true
 ---

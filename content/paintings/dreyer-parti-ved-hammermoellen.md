@@ -8,5 +8,4 @@ source: "https://commons.wikimedia.org/wiki/File:Dankvart_Dreyer,_Parti_ved_Hamm
 license: PD
 original: dreyer-parti-ved-hammermoellen.jpg
 focal: [0.5, 0.5]
-new: true
 ---

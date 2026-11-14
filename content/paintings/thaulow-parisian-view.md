@@ -8,5 +8,4 @@ source: "https://commons.wikimedia.org/wiki/File:Frits_Thaulow_-_Parisian_View_-
 license: PD
 original: thaulow-parisian-view.jpg
 focal: [0.5, 0.5]
-new: true
 ---

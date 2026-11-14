@@ -8,5 +8,4 @@ source: "https://commons.wikimedia.org/wiki/File:John_Singer_Sargent_-_Gypsy_Enc
 license: PD
 original: sargent-gypsy-encampment.jpg
 focal: [0.5, 0.5]
-new: true
 ---

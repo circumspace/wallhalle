@@ -8,5 +8,4 @@ source: "https://commons.wikimedia.org/wiki/File:The_Beach_at_Villerville,_Eug%C
 license: PD
 original: boudin-the-beach-at-villerville.jpg
 focal: [0.5, 0.55]
-new: true
 ---

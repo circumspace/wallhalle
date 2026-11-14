@@ -8,5 +8,4 @@ source: "https://commons.wikimedia.org/wiki/File:Reynolds_Sir_Joshua-Lady_Caroli
 license: PD
 original: reynolds-lady-caroline-howard.jpg
 focal: [0.5, 0.45]
-new: true
 ---

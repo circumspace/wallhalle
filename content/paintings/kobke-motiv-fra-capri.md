@@ -8,5 +8,4 @@ source: "https://commons.wikimedia.org/wiki/File:Christen_K%C3%B8bke,_Motiv_fra_
 license: PD
 original: kobke-motiv-fra-capri.jpg
 focal: [0.5, 0.45]
-new: true
 ---

@@ -8,5 +8,4 @@ source: "https://commons.wikimedia.org/wiki/File:Evening_in_February,_Riddarfj%C
 license: CC-BY-4.0
 original: jansson-evening-in-february-riddarfjarden.tif
 focal: [0.5, 0.5]
-new: true
 ---

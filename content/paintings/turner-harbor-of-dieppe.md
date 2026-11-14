@@ -8,5 +8,4 @@ source: "https://commons.wikimedia.org/wiki/File:Joseph_Mallord_William_Turner_-
 license: PD
 original: turner-harbor-of-dieppe.jpg
 focal: [0.5, 0.5]
-new: true
 ---

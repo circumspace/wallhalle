@@ -8,5 +8,4 @@ source: "https://commons.wikimedia.org/wiki/File:The_Monarch_of_the_Glen,_Edwin_
 license: PD
 original: landseer-monarch-of-the-glen.png
 focal: [0.5, 0.42]
-new: true
 ---

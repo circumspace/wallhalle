@@ -8,5 +8,4 @@ source: "https://commons.wikimedia.org/wiki/File:John_Hamilton_Mortimer_-_Death_
 license: PD
 original: mortimer-death-on-a-pale-horse.jpg
 focal: [0.5, 0.44]
-new: true
 ---

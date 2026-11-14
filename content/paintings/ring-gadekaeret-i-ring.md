@@ -8,5 +8,4 @@ source: "https://commons.wikimedia.org/wiki/File:LA_Ring,_Gadek%C3%A6ret_i_Ring,
 license: PD
 original: ring-gadekaeret-i-ring.jpg
 focal: [0.5, 0.5]
-new: true
 ---
