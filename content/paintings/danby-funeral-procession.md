@@ -8,5 +8,4 @@ source: "https://commons.wikimedia.org/wiki/File:Francis_Danby_-_Funeral_Process
 license: PD
 original: danby-funeral-procession.jpg
 focal: [0.5, 0.5]
-new: true
 ---

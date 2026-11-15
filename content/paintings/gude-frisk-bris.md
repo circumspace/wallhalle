@@ -8,5 +8,4 @@ source: "https://commons.wikimedia.org/wiki/File:Gude_Frisk_bris.jpg"
 license: PD
 original: gude-frisk-bris.jpg
 focal: [0.5, 0.5]
-new: true
 ---

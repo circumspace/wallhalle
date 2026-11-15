@@ -6,5 +6,4 @@ source: "https://commons.wikimedia.org/wiki/File:%D0%A1%D1%80%D0%B0%D0%B6%D0%B5%
 license: PD
 original: bogolyubov-battle-of-krasnaya-gorka.png
 focal: [0.5, 0.5]
-new: true
 ---

@@ -18,5 +18,4 @@ slices:
   - name: death
     title: "Death and the mouth of Hell"
     focal: [0.5, 0.73]
-new: true
 ---

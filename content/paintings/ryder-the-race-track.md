@@ -8,5 +8,4 @@ source: "https://commons.wikimedia.org/wiki/File:Albert_Pinkham_Ryder_-_The_Race
 license: CC0
 original: ryder-the-race-track.jpg
 focal: [0.5, 0.49]
-new: true
 ---

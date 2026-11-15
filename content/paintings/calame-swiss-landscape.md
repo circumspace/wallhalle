@@ -8,5 +8,4 @@ source: "https://commons.wikimedia.org/wiki/File:Swiss_Landscape-1830-Alexandre_
 license: PD
 original: calame-swiss-landscape.jpg
 focal: [0.5, 0.5]
-new: true
 ---

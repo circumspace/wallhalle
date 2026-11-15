@@ -8,5 +8,4 @@ source: "https://commons.wikimedia.org/wiki/File:Francis_Danby_-_Hampstead_Heath
 license: PD
 original: danby-hampstead-heath-sunset.jpg
 focal: [0.5, 0.5]
-new: true
 ---

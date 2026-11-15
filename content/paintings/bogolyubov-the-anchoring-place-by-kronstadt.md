@@ -6,5 +6,4 @@ source: "https://commons.wikimedia.org/wiki/File:Aleksei_Bogoljubov_-_The_Anchor
 license: PD
 original: bogolyubov-the-anchoring-place-by-kronstadt.jpg
 focal: [0.5, 0.5]
-new: true
 ---

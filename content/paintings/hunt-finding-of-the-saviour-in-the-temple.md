@@ -8,5 +8,4 @@ source: "https://commons.wikimedia.org/wiki/File:William_Holman_Hunt_-_The_Findi
 license: PD
 original: hunt-finding-of-the-saviour-in-the-temple.jpg
 focal: [0.5, 0.55]
-new: true
 ---
